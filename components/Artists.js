@@ -68,8 +68,8 @@ const Artists = () => {
           .map((artist, index) => {
             return (
               <div
-                className={`bg-red-600 ${
-                  artist.name === currentArtist && 'bg-green-500'
+                className={`${
+                  artist.name === currentArtist ? 'bg-green-500' : 'bg-red-600'
                 } p-1 text-sm sm:text-base`}
                 key={artist.id}
               >

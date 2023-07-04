@@ -87,15 +87,15 @@ const Shows = () => {
         </span>
       </div>
 
-      <div className="flex flex-row flex-wrap gap-1 mb-1">
+      <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">
         {shows
           .filter((s) => s.name.includes(searchShows.toLowerCase().replaceAll(' ', '_')))
           .slice(0, 50)
           .map((show, index) => (
             <div
               key={index}
-              className={`bg-violet-500 ${
-                show.name === currentShow && 'bg-green-500'
+              className={` ${
+                show.name === currentShow ? 'bg-green-500' : 'bg-violet-500'
               } p-1 text-sm sm:text-base`}
             >
               <button
