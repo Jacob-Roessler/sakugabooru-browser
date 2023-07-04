@@ -77,7 +77,7 @@ const Shows = () => {
 
       <div className="flex flex-row flex-wrap gap-1">
         {shows
-          .filter((s) => s.name.includes(searchShows.replaceAll(' ', '_')))
+          .filter((s) => s.name.includes(searchShows.toLowerCase().replaceAll(' ', '_')))
           .slice(0, 50)
           .map((show, index) => (
             <div key={index} className="bg-yellow-500 p-1">

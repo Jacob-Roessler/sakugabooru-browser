@@ -60,24 +60,24 @@ const Artists = () => {
         ></input>
       </div>
       <div className="flex flex-row flex-wrap gap-1 justify-center">
-        {searchArtists.length >= 2 &&
-          artists
-            .filter((artist) => {
-              return artist.name.includes(searchArtists.replace(' ', '_'));
-            })
-            .map((artist, index) => {
-              return (
-                <div className=" bg-red-600 p-1" key={artist.id}>
-                  <button
-                    onClick={(e) => {
-                      setCurrentArtist(artist.name);
-                    }}
-                  >
-                    {artist.name.replaceAll('_', ' ')}
-                  </button>
-                </div>
-              );
-            })}
+        {artists
+          .filter((artist) => {
+            return artist.name.includes(searchArtists.toLowerCase().replace(' ', '_'));
+          })
+          .slice(0, 100)
+          .map((artist, index) => {
+            return (
+              <div className=" bg-red-600 p-1" key={artist.id}>
+                <button
+                  onClick={(e) => {
+                    setCurrentArtist(artist.name);
+                  }}
+                >
+                  {artist.name.replaceAll('_', ' ')}
+                </button>
+              </div>
+            );
+          })}
       </div>
 
       <div className="flex flex-col gap-1">
