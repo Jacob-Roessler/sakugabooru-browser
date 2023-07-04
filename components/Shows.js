@@ -8,6 +8,7 @@ const Shows = () => {
   const [searchShows, setSearchShows] = useState('');
   const [currentShow, setCurrentShow] = useState('');
   const [currentShowPosts, setCurrentShowPosts] = useState([]);
+  const [showUnkown, setShowUnknown] = useState(false);
 
   const [sortByEpisode, setSortByEpisode] = useState(false);
 
@@ -86,15 +87,20 @@ const Shows = () => {
         </span>
       </div>
 
-      <div className="flex flex-row flex-wrap gap-1">
+      <div className="flex flex-row flex-wrap gap-1 mb-1">
         {shows
           .filter((s) => s.name.includes(searchShows.toLowerCase().replaceAll(' ', '_')))
           .slice(0, 50)
           .map((show, index) => (
-            <div key={index} className="bg-violet-500 p-1 text-sm sm:text-base">
+            <div
+              key={index}
+              className={`bg-violet-500 ${
+                show.name === currentShow && 'bg-green-500'
+              } p-1 text-sm sm:text-base`}
+            >
               <button
                 onClick={(e) => {
-                  setCurrentShow(show.name);
+                  setCurrentShow(show.name.replaceAll('/', '$'));
                 }}
               >
                 {show.name.replaceAll('_', ' ')}
@@ -106,11 +112,25 @@ const Shows = () => {
       <div className="flex flex-col gap-1">
         {currentShowPosts.map(([series, posts_from_series], i) => (
           <div key={i} className="bg-gray-900">
-            <div className="bg-yellow-500 p-2 text-center text-xl font-semibold">
+            <div className="bg-yellow-500 p-2 text-center text-xl font-semibold flex flex-col sticky top-0 sm:static">
               {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
               {posts_from_series.length} posts
+              {series === 'artist_unknown' && (
+                <button
+                  className=""
+                  onClick={(e) => {
+                    setShowUnknown(!showUnkown);
+                  }}
+                >
+                  <span className="bg-violet-700 p-1">{showUnkown ? 'Hide' : 'Show'} Unkown</span>
+                </button>
+              )}
             </div>
-            <div className="flex flex-row flex-wrap justify-center">
+            <div
+              className={`flex flex-row flex-wrap justify-center ${
+                series === 'artist_unknown' && !showUnkown ? 'hidden' : ''
+              }`}
+            >
               {posts_from_series.map((post, index) => {
                 return (
                   <div key={index}>

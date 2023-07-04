@@ -59,7 +59,7 @@ const Artists = () => {
           onChange={(e) => setSearchArtists(e.target.value)}
         ></input>
       </div>
-      <div className="flex flex-row flex-wrap gap-1 justify-center">
+      <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">
         {artists
           .filter((artist) => {
             return artist.name.includes(searchArtists.toLowerCase().replace(' ', '_'));
@@ -67,7 +67,12 @@ const Artists = () => {
           .slice(0, 100)
           .map((artist, index) => {
             return (
-              <div className=" bg-red-600 p-1 text-sm sm:text-base" key={artist.id}>
+              <div
+                className={`bg-red-600 ${
+                  artist.name === currentArtist && 'bg-green-500'
+                } p-1 text-sm sm:text-base`}
+                key={artist.id}
+              >
                 <button
                   onClick={(e) => {
                     setCurrentArtist(artist.name);
@@ -83,7 +88,7 @@ const Artists = () => {
       <div className="flex flex-col gap-1">
         {currentArtistPosts.map(([series, posts_from_series], i) => (
           <div key={i} className="bg-gray-900">
-            <div className="bg-violet-600 p-2 text-center text-xl font-semibold">
+            <div className="bg-violet-600 p-2 text-center text-xl font-semibold sticky top-0 sm:static">
               {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
               {posts_from_series.length} posts
             </div>

@@ -89,7 +89,7 @@ const general_tags = [
 ];
 
 export async function GET(req, { params }) {
-  const title = params.title;
+  const title = params.title.replaceAll('$', '/');
 
   const groupByEpisode = 'false';
 
