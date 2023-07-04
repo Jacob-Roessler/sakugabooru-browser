@@ -91,7 +91,7 @@ const general_tags = [
 export async function GET(req, { params }) {
   const title = params.title;
 
-  const groupByEpisode = req.nextUrl.searchParams.get('groupByEpisode');
+  const groupByEpisode = 'false';
 
   const response = await fetch(`https://www.sakugabooru.com/post.xml?limit=1000&tags=${title}`);
   const xml = await response.text();
@@ -101,7 +101,7 @@ export async function GET(req, { params }) {
     return NextResponse.json({ data: [['No posts', []]] });
   }
 
-  const tagresponse = await fetch('https://www.sakugabooru.com/tag.xml?type=1&limit=10000');
+  const tagresponse = await fetch('https://www.sakugabooru.com/tag.xml?type=1&limit=0');
   const tagxml = await tagresponse.text();
 
   const tagjson = await parser.parseStringPromise(tagxml);

@@ -3,7 +3,7 @@ const xml2js = require('xml2js');
 var parser = new xml2js.Parser();
 
 export async function GET(request) {
-  const response = await fetch('https://www.sakugabooru.com/tag.xml?type=3&limit=10000');
+  const response = await fetch('https://www.sakugabooru.com/tag.xml?type=3&limit=0');
   const xml = await response.text();
 
   const json = await parser.parseStringPromise(xml);

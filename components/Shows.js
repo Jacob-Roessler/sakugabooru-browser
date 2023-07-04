@@ -33,12 +33,21 @@ const Shows = () => {
     }
     console.log(`get ${currentShow}'s posts api called`);
     setCurrentShowPosts([]);
-    fetch(`/api/shows/posts/${currentShow}?groupByEpisode=${sortByEpisode}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrentShowPosts(data.data);
-        console.log(data.data);
-      });
+    if (sortByEpisode) {
+      fetch(`/api/shows/posts/${currentShow}/sortEpisodes`)
+        .then((res) => res.json())
+        .then((data) => {
+          setCurrentShowPosts(data.data);
+          console.log(data.data);
+        });
+    } else {
+      fetch(`/api/shows/posts/${currentShow}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setCurrentShowPosts(data.data);
+          console.log(data.data);
+        });
+    }
   }, [currentShow, sortByEpisode]);
 
   return (

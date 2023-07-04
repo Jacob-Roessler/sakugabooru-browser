@@ -74,7 +74,6 @@ const general_tags = [
   'stop_motion',
   'tagme',
   'merry_christmas',
-  'artist_unknown',
   'presumed',
   'remake',
   'umakoshi_eye',
@@ -90,9 +89,11 @@ const general_tags = [
 ];
 
 export async function GET(req, { params }) {
-  console.log(params);
-  const name = params.name;
-  const response = await fetch(`https://www.sakugabooru.com/post.xml?limit=1000&tags=${name}`);
+  const title = params.title;
+
+  const groupByEpisode = 'true';
+
+  const response = await fetch(`https://www.sakugabooru.com/post.xml?limit=1000&tags=${title}`);
   const xml = await response.text();
 
   const json = await parser.parseStringPromise(xml);
@@ -112,27 +113,36 @@ export async function GET(req, { params }) {
   let data = json.posts.post.map((p) => p['$']);
   data = data.map((post) => ({
     ...post,
-    series: post.tags
+    artists: post.tags
       .split(' ')
-      .filter((tag) => !general_tags.includes(tag) && !tagdata.includes(tag))?.[0],
+      .filter((tag) => !general_tags.includes(tag) && tagdata.includes(tag)),
+    source: post.source.includes('#') ? post.source : '##other##',
   }));
 
-  let group_by_series = {};
-  data.forEach((post) => {
-    post.series in group_by_series
-      ? group_by_series[post.series].push(post)
-      : (group_by_series[post.series] = [post]);
-  });
+  let grouped = {};
+  if (groupByEpisode === 'true') {
+    data.forEach((post) => {
+      post.source in grouped ? grouped[post.source].push(post) : (grouped[post.source] = [post]);
+    });
 
-  data = Object.entries(group_by_series)
-    .sort((a, b) => {
-      return a[1].length - b[1].length;
-    })
-    .reverse();
-
-  data = data.map(([series, posts], index) => {
-    return [series, posts.sort((a, b) => a.source.localeCompare(b.source))];
-  });
+    data = Object.entries(grouped).sort((a, b) => {
+      return a[0].localeCompare(b[0]);
+    });
+  } else {
+    data.forEach((post) => {
+      post.artists.forEach((artist) => {
+        artist in grouped ? grouped[artist].push(post) : (grouped[artist] = [post]);
+      });
+    });
+    data = Object.entries(grouped)
+      .sort((a, b) => {
+        return a[1].length - b[1].length;
+      })
+      .reverse();
+    data = data.map(([artist, posts], index) => {
+      return [artist, posts.sort((a, b) => a.source.localeCompare(b.source))];
+    });
+  }
 
   return NextResponse.json({ data });
 }
