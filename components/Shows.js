@@ -112,7 +112,7 @@ const Shows = () => {
       <div className="flex flex-col gap-1">
         {currentShowPosts.map(([series, posts_from_series], i) => (
           <div key={i} className="bg-gray-900">
-            <div className="bg-yellow-500 p-2 text-center text-xl font-semibold flex flex-col sticky top-0 sm:static">
+            <div className="bg-yellow-500 p-2 text-black text-center text-xl font-semibold flex flex-col sticky top-0 md:static">
               {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
               {posts_from_series.length} posts
               {series === 'artist_unknown' && (
@@ -122,7 +122,9 @@ const Shows = () => {
                     setShowUnknown(!showUnkown);
                   }}
                 >
-                  <span className="bg-violet-700 p-1">{showUnkown ? 'Hide' : 'Show'} Unkown</span>
+                  <span className="bg-violet-700 text-white p-1">
+                    {showUnkown ? 'Hide' : 'Show'} Unkown
+                  </span>
                 </button>
               )}
             </div>
@@ -133,7 +135,7 @@ const Shows = () => {
             >
               {posts_from_series.map((post, index) => {
                 return (
-                  <div key={index} className="basis-[50%] md:basis-auto">
+                  <div key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto">
                     <button
                       onClick={(e) => {
                         setVideoOpen(true);

@@ -88,14 +88,14 @@ const Artists = () => {
       <div className="flex flex-col gap-1">
         {currentArtistPosts.map(([series, posts_from_series], i) => (
           <div key={i} className="bg-gray-900">
-            <div className="bg-violet-600 p-2 text-center text-xl font-semibold sticky top-0 sm:static">
+            <div className="bg-violet-600 p-2 text-center text-xl font-semibold sticky top-0 md:static">
               {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
               {posts_from_series.length} posts
             </div>
             <div className="flex flex-row flex-wrap  justify-center ">
               {posts_from_series.map((post, index) => {
                 return (
-                  <div key={index} className="basis-[50%] md:basis-auto">
+                  <div key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto">
                     <button
                       onClick={(e) => {
                         setVideoOpen(true);
