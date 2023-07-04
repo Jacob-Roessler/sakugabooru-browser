@@ -52,10 +52,10 @@ const Artists = () => {
           }}
         ></button>
       </div>
-      <div className="text-center">
+      <div className="flex justify-center">
         <input
           placeholder="Search Artists"
-          className="text-black p-1 mb-2"
+          className="text-black p-1 mb-2 text-center"
           onChange={(e) => setSearchArtists(e.target.value)}
         ></input>
       </div>
@@ -67,7 +67,7 @@ const Artists = () => {
           .slice(0, 100)
           .map((artist, index) => {
             return (
-              <div className=" bg-red-600 p-1" key={artist.id}>
+              <div className=" bg-red-600 p-1 text-sm sm:text-base" key={artist.id}>
                 <button
                   onClick={(e) => {
                     setCurrentArtist(artist.name);

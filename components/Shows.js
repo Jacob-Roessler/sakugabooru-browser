@@ -58,21 +58,23 @@ const Shows = () => {
           }}
         ></button>
       </div>
-      <div className="">
+      <div className="flex flex-col items-center justify-center text-sm sm:text-base">
         <input
           placeholder="Search Shows"
-          className="text-black p-1 mb-2 mr-1 text-center"
+          className="text-black p-1 mb-2 mr-1 text-center max-w-[230px]"
           onChange={(e) => setSearchShows(e.target.value)}
         ></input>
-        Sort by episode:
-        <input
-          type="checkbox"
-          className=""
-          checked={sortByEpisode}
-          onChange={(e) => {
-            setSortByEpisode(!sortByEpisode);
-          }}
-        />
+        <span className="">
+          Sort by episode:{' '}
+          <input
+            type="checkbox"
+            className="mb-2"
+            checked={sortByEpisode}
+            onChange={(e) => {
+              setSortByEpisode(!sortByEpisode);
+            }}
+          />
+        </span>
       </div>
 
       <div className="flex flex-row flex-wrap gap-1">
@@ -80,7 +82,7 @@ const Shows = () => {
           .filter((s) => s.name.includes(searchShows.toLowerCase().replaceAll(' ', '_')))
           .slice(0, 50)
           .map((show, index) => (
-            <div key={index} className="bg-yellow-500 p-1">
+            <div key={index} className="bg-yellow-500 p-1 text-sm sm:text-base">
               <button
                 onClick={(e) => {
                   setCurrentShow(show.name);
