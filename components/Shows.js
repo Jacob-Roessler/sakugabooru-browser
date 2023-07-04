@@ -82,7 +82,7 @@ const Shows = () => {
           .filter((s) => s.name.includes(searchShows.toLowerCase().replaceAll(' ', '_')))
           .slice(0, 50)
           .map((show, index) => (
-            <div key={index} className="bg-yellow-500 p-1 text-sm sm:text-base">
+            <div key={index} className="bg-violet-500 p-1 text-sm sm:text-base">
               <button
                 onClick={(e) => {
                   setCurrentShow(show.name);
@@ -97,7 +97,7 @@ const Shows = () => {
       <div className="flex flex-col gap-1">
         {currentShowPosts.map(([series, posts_from_series], i) => (
           <div key={i} className="bg-gray-900">
-            <div className="bg-violet-600 p-2 text-center text-xl font-semibold">
+            <div className="bg-yellow-500 p-2 text-center text-xl font-semibold">
               {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
               {posts_from_series.length} posts
             </div>
