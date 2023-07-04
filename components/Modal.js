@@ -55,13 +55,17 @@ export default function Example({ isOpen, setOpen, currentVideo }) {
                         </a>
                       </Dialog.Title>
                       <div className="mt-2 flex flex-row justify-center">
-                        <ReactPlayer
-                          width={currentVideo.width}
-                          height={currentVideo.height}
-                          playing={true}
-                          controls={true}
-                          url={currentVideo.file_url}
-                        />
+                        {currentVideo.file_ext !== 'mp4' && currentVideo.file_ext !== 'webm' ? (
+                          <img src={currentVideo.file_url} alt="image"></img>
+                        ) : (
+                          <ReactPlayer
+                            width={currentVideo.width}
+                            height={currentVideo.height}
+                            playing={true}
+                            controls={true}
+                            url={currentVideo.file_url}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
