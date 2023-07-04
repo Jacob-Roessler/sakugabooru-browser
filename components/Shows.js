@@ -52,7 +52,7 @@ const Shows = () => {
   }, [currentShow, sortByEpisode]);
 
   return (
-    <div className="container">
+    <div className="">
       <div>
         {currentVideo?.file_url && (
           <Modal
@@ -96,7 +96,7 @@ const Shows = () => {
               key={index}
               className={` ${
                 show.name === currentShow ? 'bg-green-500' : 'bg-violet-500'
-              } p-1 text-sm sm:text-base`}
+              } p-1 text-sm sm:text-base `}
             >
               <button
                 onClick={(e) => {
@@ -133,7 +133,7 @@ const Shows = () => {
             >
               {posts_from_series.map((post, index) => {
                 return (
-                  <div key={index}>
+                  <div key={index} className="basis-[50%] md:basis-auto">
                     <button
                       onClick={(e) => {
                         setVideoOpen(true);

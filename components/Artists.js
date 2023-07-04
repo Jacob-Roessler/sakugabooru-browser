@@ -40,7 +40,7 @@ const Artists = () => {
   }, [currentArtist]);
 
   return (
-    <div className="container">
+    <div className="">
       <div>
         {currentVideo?.file_url && (
           <Modal isOpen={videoOpen} setOpen={setVideoOpen} currentVideo={currentVideo} />
@@ -92,10 +92,10 @@ const Artists = () => {
               {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
               {posts_from_series.length} posts
             </div>
-            <div className="flex flex-row flex-wrap justify-center">
+            <div className="flex flex-row flex-wrap  justify-center ">
               {posts_from_series.map((post, index) => {
                 return (
-                  <div key={index}>
+                  <div key={index} className="basis-[50%] md:basis-auto">
                     <button
                       onClick={(e) => {
                         setVideoOpen(true);

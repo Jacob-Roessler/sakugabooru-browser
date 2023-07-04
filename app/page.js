@@ -6,7 +6,7 @@ import Shows from '@/components/Shows';
 export default function Home() {
   const [viewMode, setViewMode] = useState('artists');
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <main className="flex min-h-screen flex-col items-center pt-2 md:p-24">
       <div className="text-xl sm:text-3xl mb-2">Booru Browser</div>
       <div className="flex flex-col justify-center items-center">
         Browse by
