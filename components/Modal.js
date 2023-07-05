@@ -57,6 +57,7 @@ export default function Example({ isOpen, setOpen, currentVideo }) {
                             width={currentVideo.width}
                             height={currentVideo.height}
                             playing={true}
+                            loop={true}
                             controls={true}
                             url={currentVideo.file_url}
                           />
