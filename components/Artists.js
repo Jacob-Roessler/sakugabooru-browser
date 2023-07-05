@@ -88,7 +88,7 @@ const Artists = ({ current }) => {
       <div className="flex flex-col gap-1">
         {currentArtistPosts.map(([series, posts_from_series], i) => (
           <div key={i} className="bg-gray-900">
-            <div className="bg-violet-600 p-2 text-center text-xl font-semibold sticky top-0 md:static">
+            <div className="bg-violet-600 p-2 text-center text-xl font-semibold sticky z-50 top-0 md:static">
               {console.log(series)}
               {series.split(',').map((s, index) => {
                 return (
