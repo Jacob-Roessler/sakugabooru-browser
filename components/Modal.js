@@ -14,6 +14,9 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
     if (player && goFullscreen) {
       console.log(player.getInternalPlayer());
       screenfull.request(player.getInternalPlayer());
+      try {
+        player.getInternalPlayer().webkitEnterFullscreen();
+      } catch (e) {}
     }
   };
 
