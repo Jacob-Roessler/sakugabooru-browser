@@ -112,7 +112,7 @@ const Shows = ({ current }) => {
       <div className="flex flex-col gap-1">
         {currentShowPosts.map(([series, posts_from_series], i) => (
           <div key={i} className="bg-gray-900">
-            <div className="bg-yellow-500 p-2 text-black text-center text-xl font-semibold flex flex-col sticky z-50 top-0 md:static">
+            <div className="bg-yellow-500 p-2 text-black text-center text-xl font-semibold flex flex-col sticky z-30 top-0 md:static">
               <a
                 target="_blank"
                 href={!sortByEpisode && `/artists/${series}`}
