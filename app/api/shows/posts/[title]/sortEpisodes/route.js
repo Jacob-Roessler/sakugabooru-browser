@@ -122,7 +122,8 @@ export async function GET(req, { params }) {
   let grouped = {};
   if (groupByEpisode === 'true') {
     data.forEach((post) => {
-      post.source in grouped ? grouped[post.source].push(post) : (grouped[post.source] = [post]);
+      let s = post.source.trim();
+      s in grouped ? grouped[s].push(post) : (grouped[s] = [post]);
     });
 
     data = Object.entries(grouped).sort((a, b) => {
