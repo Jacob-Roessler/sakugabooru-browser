@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import Modal from './Modal';
 import ArtistsCard from './ArtistsCard';
+import Pagination from './Pagination';
 
-import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
+const pagination = 50;
 
 const Artists = ({ current }) => {
   const [artists, setArtists] = useState([]);
@@ -73,67 +74,22 @@ const Artists = ({ current }) => {
           }}
         ></button>
       </div>
-      <div className="flex flex-row content-center justify-center mb-2">
-        <button
-          className="bg-slate-800 px-2"
-          onClick={(e) => {
-            setArtistsOffset(0);
-          }}
-        >
-          <RiArrowLeftSLine />
-          <RiArrowLeftSLine />
-        </button>
-        <button
-          className="bg-slate-800 px-2"
-          onClick={(e) => {
-            setArtistsOffset(Math.max(0, artistsOffset - 100));
-          }}
-        >
-          <RiArrowLeftSLine />
-        </button>
-        <input
-          placeholder={current ? `${current}` : `Search Artists`}
-          className="text-black p-2 text-center"
-          onChange={(e) => {
-            setArtistsOffset(0);
-            setSearchArtists(e.target.value);
-          }}
-        ></input>
-        <button
-          className="bg-slate-800 px-2"
-          onClick={(e) => {
-            setArtistsOffset(
-              Math.min(
-                artists.filter((artist) => {
-                  return artist.name.includes(searchArtists.toLowerCase().replace(' ', '_'));
-                }).length - 100,
-                artistsOffset + 100
-              )
-            );
-          }}
-        >
-          <RiArrowRightSLine />
-        </button>
-        <button
-          className="bg-slate-800 px-2"
-          onClick={(e) => {
-            setArtistsOffset(
-              artists.filter((artist) => {
-                return artist.name.includes(searchArtists.toLowerCase().replace(' ', '_'));
-              }).length - 100
-            );
-          }}
-        >
-          <RiArrowRightSLine />
-          <RiArrowRightSLine />
-        </button>
-      </div>
+
+      <Pagination
+        setSearchTerm={setSearchArtists}
+        searchTerm={searchArtists}
+        offset={artistsOffset}
+        setOffset={setArtistsOffset}
+        list={artists}
+        pagination={pagination}
+      />
+
       <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">
         {artists
           .filter((artist) => {
             return artist.name.includes(searchArtists.toLowerCase().replace(' ', '_'));
           })
-          .slice(artistsOffset, artistsOffset + 100)
+          .slice(artistsOffset, artistsOffset + pagination)
           .map((artist, index) => {
             return (
               <div

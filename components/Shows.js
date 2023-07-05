@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import Modal from './Modal';
 import ShowsCard from './ShowsCard';
+import Pagination from './Pagination';
 
-import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
+const pagination = 50;
 
 const Shows = ({ current }) => {
   const [shows, setShows] = useState([]);
@@ -75,60 +76,14 @@ const Shows = ({ current }) => {
         ></button>
       </div>
       <div className="flex flex-row items-center justify-center text-sm sm:text-base mb-2">
-        <div className="flex flex-row justify-center content-center text-sm sm:text-base mb-2">
-          <button
-            className="bg-slate-800 px-2"
-            onClick={(e) => {
-              setShowsOffset(0);
-            }}
-          >
-            <RiArrowLeftSLine />
-            <RiArrowLeftSLine />
-          </button>
-          <button
-            className="bg-slate-800 px-2"
-            onClick={(e) => {
-              setShowsOffset(Math.max(0, showsOffset - 50));
-            }}
-          >
-            <RiArrowLeftSLine />
-          </button>
-          <input
-            placeholder={current ? `${current}` : `Search Shows`}
-            className="text-black p-2  text-center"
-            onChange={(e) => {
-              setShowsOffset(0);
-              setSearchShows(e.target.value);
-            }}
-          ></input>
-          <button
-            className="bg-slate-800 px-2"
-            onClick={(e) => {
-              setShowsOffset(
-                Math.min(
-                  shows.filter((s) =>
-                    s.name.includes(searchShows.toLowerCase().replaceAll(' ', '_'))
-                  ).length - 50,
-                  showsOffset + 50
-                )
-              );
-            }}
-          >
-            <RiArrowRightSLine />
-          </button>
-          <button
-            className="bg-slate-800 px-2"
-            onClick={(e) => {
-              setShowsOffset(
-                shows.filter((s) => s.name.includes(searchShows.toLowerCase().replaceAll(' ', '_')))
-                  .length - 50
-              );
-            }}
-          >
-            <RiArrowRightSLine />
-            <RiArrowRightSLine />
-          </button>
-        </div>
+        <Pagination
+          setSearchTerm={setSearchShows}
+          searchTerm={searchShows}
+          offset={showsOffset}
+          setOffset={setShowsOffset}
+          list={shows}
+          pagination={pagination}
+        />
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800 z-50 invisible sm:visible">
           <button
@@ -154,7 +109,7 @@ const Shows = ({ current }) => {
       <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">
         {shows
           .filter((s) => s.name.includes(searchShows.toLowerCase().replaceAll(' ', '_')))
-          .slice(showsOffset, showsOffset + 50)
+          .slice(showsOffset, showsOffset + pagination)
           .map((show, index) => (
             <div
               key={index}
