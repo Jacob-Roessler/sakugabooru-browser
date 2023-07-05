@@ -33,7 +33,7 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
       <section {...getCollapseProps()}>
         <div className="bg-gray-900">
           {console.log(series)}
-          <div className="flex flex-row flex-wrap  justify-center ">
+          <div className="flex flex-row flex-wrap  justify-center items-center">
             {posts_from_series.map((post, index) => {
               return (
                 <div key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto">
@@ -45,7 +45,7 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
                         setCurrentVideo(post);
                       }}
                     >
-                      <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
+                      <div className=" h-full w-full relative  text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
                         <p className="absolute flex h-full items-center invisible group-hover:visible ">
                           {post.source === '' ? 'No Source' : `Source: ${post.source}`}
                         </p>

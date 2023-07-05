@@ -76,12 +76,12 @@ const Shows = ({ current }) => {
           onChange={(e) => setSearchShows(e.target.value)}
         ></input>
         <button
-          className="fixed bottom-0 right-0 p-4 bg-slate-800 z-50"
+          className="fixed bottom-0 right-0 p-4 bg-slate-800 z-50 hover:scale-105"
           onClick={(e) => {
             setSortByEpisode(!sortByEpisode);
           }}
         >
-          Sort by episode: <input type="checkbox" className="mb-2" checked={sortByEpisode} />
+          Sort by episode: {sortByEpisode ? 'Yes' : 'No'}
         </button>
       </div>
 

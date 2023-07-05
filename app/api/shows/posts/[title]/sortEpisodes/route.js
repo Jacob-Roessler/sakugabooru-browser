@@ -119,7 +119,7 @@ export async function GET(req, { params }) {
     artists: post.tags
       .split(' ')
       .filter((tag) => !general_tags.includes(tag) && tagdata.includes(tag)),
-    source: post.source.includes('#') ? post.source : 'Source: OP/ED/Movie/Twitter/Etc',
+    source: post.source.includes('#') ? post.source : `Source: ${post.source}`,
   }));
 
   let grouped = {};
@@ -128,8 +128,12 @@ export async function GET(req, { params }) {
       let s = post.source.trim();
       if (s[0] === '#') {
         s = s.split(' ')[0];
+        s in grouped ? grouped[s].push(post) : (grouped[s] = [post]);
+      } else {
+        'Non-Episode Source' in grouped
+          ? grouped['Non-Episode Source'].push(post)
+          : (grouped['Non-Episode Source'] = [post]);
       }
-      s in grouped ? grouped[s].push(post) : (grouped[s] = [post]);
     });
 
     data = Object.entries(grouped).sort((a, b) => {

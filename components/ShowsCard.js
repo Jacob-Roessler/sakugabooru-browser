@@ -29,7 +29,7 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
 
       <section {...getCollapseProps()}>
         <div className="bg-gray-900">
-          <div className="flex flex-row flex-wrap justify-center">
+          <div className="flex flex-row flex-wrap justify-center items-center">
             {posts_from_series.map((post, index) => {
               return (
                 <div
@@ -42,11 +42,15 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
                       setCurrentVideo(post);
                     }}
                   >
-                    <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
-                      <p className="absolute flex h-full items-center invisible group-hover:visible ">
-                        {sortByEpisode ? `By ${post.artists.join(' ')}` : `${post.source}`}
+                    <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center ">
+                      <p className="absolute flex h-full items-center invisible group-hover:visible break-words">
+                        {sortByEpisode
+                          ? `By ${post.artists.join(' ')} ${
+                              post.source.includes('Source') ? post.source : ''
+                            }`
+                          : `${post.source.trim() === 'Source:' ? 'Source: None' : post.source}`}
                       </p>
-                      <img src={post.preview_url}></img>
+                      <img className="group-hover:opacity-20" src={post.preview_url}></img>
                     </div>
                   </button>
                 </div>
