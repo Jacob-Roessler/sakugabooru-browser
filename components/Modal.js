@@ -40,34 +40,14 @@ export default function Example({ isOpen, setOpen, currentVideo }) {
                         as="h3"
                         className="text-base font-semibold leading-6 text-white flex flex-col"
                       >
-                        <span>
-                          {Array.isArray(currentVideo.series)
-                            ? currentVideo.series.join(' - ').replaceAll('_', ' ')
-                            : currentVideo.series.replaceAll('_', ' ')}{' '}
-                          - {currentVideo.source.replace('#', 'Episode ')}
-                        </span>
-                        <span>
-                          {Object.hasOwn(currentVideo, 'artists') &&
-                            currentVideo.artists.map((artist, index) => {
-                              return (
-                                <a
-                                  key={index}
-                                  target="_blank"
-                                  href={`/artists/${artist}`}
-                                  className="hover:underline"
-                                >
-                                  {artist.replaceAll('_', ' ')}
-                                </a>
-                              );
-                            })}
-                        </span>
-                        <a
-                          target="_blank"
-                          href={`https://www.sakugabooru.com/post/show/${currentVideo.id}`}
-                          className="hover:underline"
+                        <button
+                          className="flex-0 "
+                          onClick={(e) => {
+                            navigator.clipboard.writeText(currentVideo.file_url);
+                          }}
                         >
-                          Go to sakugabooru page
-                        </a>
+                          Copy to clipboard
+                        </button>
                       </Dialog.Title>
                       <div className="mt-2 flex flex-row justify-center">
                         {currentVideo.file_ext !== 'mp4' && currentVideo.file_ext !== 'webm' ? (
@@ -81,6 +61,36 @@ export default function Example({ isOpen, setOpen, currentVideo }) {
                             url={currentVideo.file_url}
                           />
                         )}
+                      </div>
+                      <div className="flex flex-row sm:flex-col justify-center items-center gap-1">
+                        <span>
+                          {Array.isArray(currentVideo.series)
+                            ? currentVideo.series.join(' - ').replaceAll('_', ' ')
+                            : currentVideo.series.replaceAll('_', ' ')}{' '}
+                          - {currentVideo.source.replace('#', 'Episode ')}
+                        </span>
+                        <span className="flex gap-1">
+                          {Object.hasOwn(currentVideo, 'artists') &&
+                            currentVideo.artists.map((artist, index) => {
+                              return (
+                                <a
+                                  key={index}
+                                  target="_blank"
+                                  href={`/artists/${artist}`}
+                                  className="hover:underline text-yellow-500"
+                                >
+                                  {artist.replaceAll('_', ' ')}
+                                </a>
+                              );
+                            })}
+                        </span>
+                        <a
+                          target="_blank"
+                          href={`https://www.sakugabooru.com/post/show/${currentVideo.id}`}
+                          className="hover:underline text-blue-300"
+                        >
+                          booru page
+                        </a>
                       </div>
                     </div>
                   </div>
