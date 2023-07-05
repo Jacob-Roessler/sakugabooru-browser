@@ -8,7 +8,7 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
 
   return (
     <div className="text-sm md:text-xl">
-      <div className="bg-yellow-500 p-2 text-black text-center font-semibold flex flex-col sticky z-30 top-0 md:static">
+      <div className="bg-yellow-500 p-2 text-left font-semibold sticky z-30 top-0 md:static flex-row ">
         <button
           {...getToggleProps({
             onClick: () => setExpanded((prevExpanded) => !prevExpanded),
@@ -42,7 +42,7 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
                     }}
                   >
                     <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center ">
-                      <p className="absolute flex h-full items-center invisible group-hover:visible break-words">
+                      <p className="absolute flex h-full items-center invisible group-hover:visible break-all">
                         {sortByEpisode
                           ? `By ${post.artists.join(' ')} ${
                               post.source.includes('Source') ? post.source : ''
