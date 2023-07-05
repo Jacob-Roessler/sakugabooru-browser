@@ -19,7 +19,12 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" initialFocus={cancelButtonRef} onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="relative z-[100]"
+        initialFocus={cancelButtonRef}
+        onClose={setOpen}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -66,6 +71,7 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
                         ) : (
                           <ReactPlayer
                             ref={playerRef}
+                            playsinline={true}
                             width={currentVideo.width}
                             height={currentVideo.height}
                             playing={true}
