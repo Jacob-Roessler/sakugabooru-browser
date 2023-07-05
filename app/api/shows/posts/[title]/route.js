@@ -95,8 +95,16 @@ export async function GET(req, { params }) {
   const response = await fetch(`https://www.sakugabooru.com/post.json?limit=1000&tags=${title}`);
   let data = await response.json();
 
-  if (data.length === '0') {
+  if (data.length === 0) {
     return NextResponse.json({ data: [['No posts', []]] });
+  }
+
+  if (data.length === 1000) {
+    const response2 = await fetch(
+      `https://www.sakugabooru.com/post.json?limit=1000&tags=${title}&page=2`
+    );
+    let data2 = await response2.json();
+    data = [...data, ...data2];
   }
 
   const tagresponse = await fetch('https://www.sakugabooru.com/tag.json?type=1&limit=0');

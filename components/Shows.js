@@ -72,20 +72,17 @@ const Shows = ({ current }) => {
       <div className="flex flex-col items-center justify-center text-sm sm:text-base">
         <input
           placeholder="Search Shows"
-          className="text-black p-1 mb-2 mr-1 text-center max-w-[230px]"
+          className="text-black mb-2 p-1  text-center"
           onChange={(e) => setSearchShows(e.target.value)}
         ></input>
-        <span className="">
-          Sort by episode:{' '}
-          <input
-            type="checkbox"
-            className="mb-2"
-            checked={sortByEpisode}
-            onChange={(e) => {
-              setSortByEpisode(!sortByEpisode);
-            }}
-          />
-        </span>
+        <button
+          className="fixed bottom-0 right-0 p-4 bg-slate-800 z-50"
+          onClick={(e) => {
+            setSortByEpisode(!sortByEpisode);
+          }}
+        >
+          Sort by episode: <input type="checkbox" className="mb-2" checked={sortByEpisode} />
+        </button>
       </div>
 
       <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">
