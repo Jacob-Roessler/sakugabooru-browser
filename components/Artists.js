@@ -11,6 +11,7 @@ const Artists = ({ current }) => {
   const [currentArtistPosts, setCurrentArtistPosts] = useState([]);
 
   const [videoOpen, setVideoOpen] = useState(false);
+  const [autoFullscreen, setAutoFullscreen] = useState(true);
   const [currentVideo, setCurrentVideo] = useState({});
 
   useEffect(() => {
@@ -42,9 +43,24 @@ const Artists = ({ current }) => {
 
   return (
     <div className="">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800 hover:underline z-50">
+        <button
+          className="hover:underline"
+          onClick={() => {
+            setAutoFullscreen(!autoFullscreen);
+          }}
+        >
+          Fullscreen {`${autoFullscreen ? 'Yes' : 'No'}`}
+        </button>{' '}
+      </div>
       <div>
         {currentVideo?.file_url && (
-          <Modal isOpen={videoOpen} setOpen={setVideoOpen} currentVideo={currentVideo} />
+          <Modal
+            isOpen={videoOpen}
+            setOpen={setVideoOpen}
+            currentVideo={currentVideo}
+            goFullscreen={autoFullscreen}
+          />
         )}
 
         <button

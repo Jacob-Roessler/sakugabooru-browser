@@ -11,6 +11,7 @@ const Shows = ({ current }) => {
   const [currentShowPosts, setCurrentShowPosts] = useState([]);
 
   const [sortByEpisode, setSortByEpisode] = useState(false);
+  const [autoFullscreen, setAutoFullscreen] = useState(true);
   const [collapseAll, setCollapseAll] = useState(true);
 
   const [videoOpen, setVideoOpen] = useState(false);
@@ -60,6 +61,7 @@ const Shows = ({ current }) => {
             isOpen={videoOpen}
             setOpen={setVideoOpen}
             currentVideo={{ ...currentVideo, series: currentShow }}
+            goFullscreen={autoFullscreen}
           />
         )}
 
@@ -76,13 +78,23 @@ const Shows = ({ current }) => {
           onChange={(e) => setSearchShows(e.target.value)}
         ></input>
         <button
-          className="fixed bottom-0 right-0 p-4 bg-slate-800 z-50 hover:scale-105"
+          className="fixed bottom-0 right-0 p-4 bg-slate-800 z-[51] hover:scale-105"
           onClick={(e) => {
             setSortByEpisode(!sortByEpisode);
           }}
         >
           Sort by episode: {sortByEpisode ? 'Yes' : 'No'}
         </button>
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800  z-50">
+          <button
+            className="hover:underline"
+            onClick={() => {
+              setAutoFullscreen(!autoFullscreen);
+            }}
+          >
+            Fullscreen {`${autoFullscreen ? 'Yes' : 'No'}`}
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">

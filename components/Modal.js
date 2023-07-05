@@ -2,9 +2,20 @@ import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import ReactPlayer from 'react-player';
+import screenfull from 'screenfull';
 
-export default function Example({ isOpen, setOpen, currentVideo }) {
+export default function Example({ isOpen, setOpen, currentVideo, goFullscreen }) {
   const cancelButtonRef = useRef(null);
+  const playerRef = useRef(null);
+
+  const handlePlay = () => {
+    const player = playerRef.current;
+
+    if (player && goFullscreen) {
+      console.log(player.getInternalPlayer());
+      screenfull.request(player.getInternalPlayer());
+    }
+  };
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -22,7 +33,7 @@ export default function Example({ isOpen, setOpen, currentVideo }) {
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto text-xs md:text-base">
-          <div className="flex min-h-full items-end justify-center p-4 text-center items-center p-0">
+          <div className="flex min-h-full items-end justify-center p-4 text-center items-center p-0 max-h-[90vh]">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -54,12 +65,15 @@ export default function Example({ isOpen, setOpen, currentVideo }) {
                           <img src={currentVideo.file_url} alt="image"></img>
                         ) : (
                           <ReactPlayer
+                            ref={playerRef}
                             width={currentVideo.width}
                             height={currentVideo.height}
                             playing={true}
                             loop={true}
                             controls={true}
                             url={currentVideo.file_url}
+                            className="w-[100%]"
+                            onPlay={handlePlay}
                           />
                         )}
                       </div>
