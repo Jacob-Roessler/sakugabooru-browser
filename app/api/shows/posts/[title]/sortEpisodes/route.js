@@ -116,7 +116,7 @@ export async function GET(req, { params }) {
     artists: post.tags
       .split(' ')
       .filter((tag) => !general_tags.includes(tag) && tagdata.includes(tag)),
-    source: post.source.includes('#') ? post.source : '##other##',
+    source: post.source.includes('#') ? post.source : 'Source: OP/ED/Movie/Twitter/Etc',
   }));
 
   let grouped = {};

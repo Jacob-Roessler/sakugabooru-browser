@@ -116,13 +116,17 @@ export async function GET(req, { params }) {
     artists: post.tags
       .split(' ')
       .filter((tag) => !general_tags.includes(tag) && tagdata.includes(tag)),
-    source: post.source.includes('#') ? post.source : '##other##',
+    source: post.source.includes('#') ? post.source : `Source: ${post.source}`,
   }));
 
   let grouped = {};
   if (groupByEpisode === 'true') {
     data.forEach((post) => {
-      post.source in grouped ? grouped[post.source].push(post) : (grouped[post.source] = [post]);
+      if (post.source.indexOf('Source:') > 0) {
+        'Other' in grouped ? grouped['Other'].push(post) : (grouped['Other'] = [post]);
+      } else {
+        post.source in grouped ? grouped[post.source].push(post) : (grouped[post.source] = [post]);
+      }
     });
 
     data = Object.entries(grouped).sort((a, b) => {

@@ -153,7 +153,7 @@ const Shows = ({ current }) => {
                     >
                       <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
                         <p className="absolute flex h-full items-center invisible group-hover:visible ">
-                          {post.artists && `By ${post.artists.join(' ')}`}
+                          {sortByEpisode ? `By ${post.artists.join(' ')}` : `${post.source}`}
                         </p>
                         <img src={post.preview_url}></img>
                       </div>

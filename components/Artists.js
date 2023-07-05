@@ -116,7 +116,7 @@ const Artists = ({ current }) => {
                       >
                         <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
                           <p className="absolute flex h-full items-center invisible group-hover:visible ">
-                            {post.source === '' ? 'No Source' : `From ${post.source}`}
+                            {post.source === '' ? 'No Source' : `Source: ${post.source}`}
                           </p>
                           <img className="group-hover:opacity-20" src={post.preview_url}></img>
                         </div>
