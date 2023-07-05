@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Modal from './Modal';
+import ArtistsCard from './ArtistsCard';
 
 const Artists = ({ current }) => {
   const [artists, setArtists] = useState([]);
@@ -87,46 +88,13 @@ const Artists = ({ current }) => {
 
       <div className="flex flex-col gap-1">
         {currentArtistPosts.map(([series, posts_from_series], i) => (
-          <div key={i} className="bg-gray-900">
-            <div className="bg-violet-600 p-2 text-center text-xl font-semibold sticky z-30 top-0 md:static">
-              {console.log(series)}
-              {series.split(',').map((s, index) => {
-                return (
-                  <>
-                    <a key={index} target="_blank" href={`/shows/${s}`} className="hover:underline">
-                      {series === 'undefined' ? 'Other' : s.replaceAll('_', ' ')}
-                    </a>
-                    {' - '}
-                  </>
-                );
-              })}
-              {posts_from_series.length} posts
-            </div>
-            <div className="flex flex-row flex-wrap  justify-center ">
-              {posts_from_series.map((post, index) => {
-                return (
-                  <div key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto">
-                    <div className="group w-full h-full z-10">
-                      <button
-                        className=""
-                        onClick={(e) => {
-                          setVideoOpen(true);
-                          setCurrentVideo(post);
-                        }}
-                      >
-                        <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
-                          <p className="absolute flex h-full items-center invisible group-hover:visible ">
-                            {post.source === '' ? 'No Source' : `Source: ${post.source}`}
-                          </p>
-                          <img className="group-hover:opacity-20" src={post.preview_url}></img>
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <ArtistsCard
+            setVideoOpen={setVideoOpen}
+            setCurrentVideo={setCurrentVideo}
+            key={i}
+            series={series}
+            posts_from_series={posts_from_series}
+          />
         ))}
       </div>
     </div>

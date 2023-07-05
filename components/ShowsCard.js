@@ -1,0 +1,62 @@
+import { useState } from 'react';
+
+import { useCollapse } from 'react-collapsed';
+
+const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, sortByEpisode }) => {
+  const [isExpanded, setExpanded] = useState(series === 'artist_unknown' ? false : true);
+  const { getCollapseProps, getToggleProps } = useCollapse({ isExpanded });
+
+  return (
+    <div className="text-sm md:text-xl">
+      <div className="bg-yellow-500 p-2 text-black text-center font-semibold flex flex-col sticky z-30 top-0 md:static">
+        <button
+          {...getToggleProps({
+            onClick: () => setExpanded((prevExpanded) => !prevExpanded),
+          })}
+          className="w-full"
+        >
+          <span className="float-left">{isExpanded ? '-' : '+'}</span>
+          <a
+            target="_blank"
+            href={!sortByEpisode && `/artists/${series}`}
+            className={`${!sortByEpisode && 'hover:underline'} `}
+          >
+            {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
+            {posts_from_series.length} posts
+          </a>
+        </button>
+      </div>
+
+      <section {...getCollapseProps()}>
+        <div className="bg-gray-900">
+          <div className="flex flex-row flex-wrap justify-center">
+            {posts_from_series.map((post, index) => {
+              return (
+                <div
+                  key={index}
+                  className="group basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto"
+                >
+                  <button
+                    onClick={(e) => {
+                      setVideoOpen(true);
+                      setCurrentVideo(post);
+                    }}
+                  >
+                    <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
+                      <p className="absolute flex h-full items-center invisible group-hover:visible ">
+                        {sortByEpisode ? `By ${post.artists.join(' ')}` : `${post.source}`}
+                      </p>
+                      <img src={post.preview_url}></img>
+                    </div>
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default ShowsCard;

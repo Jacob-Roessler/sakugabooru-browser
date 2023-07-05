@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import Modal from './Modal';
+import ShowsCard from './ShowsCard';
 
 const Shows = ({ current }) => {
   const [shows, setShows] = useState([]);
   const [searchShows, setSearchShows] = useState(current ? current : '');
   const [currentShow, setCurrentShow] = useState(current ? current : '');
   const [currentShowPosts, setCurrentShowPosts] = useState([]);
-  const [showUnkown, setShowUnknown] = useState(false);
 
   const [sortByEpisode, setSortByEpisode] = useState(false);
+  const [collapseAll, setCollapseAll] = useState(true);
 
   const [videoOpen, setVideoOpen] = useState(false);
   const [currentVideo, setCurrentVideo] = useState({});
@@ -111,58 +112,14 @@ const Shows = ({ current }) => {
 
       <div className="flex flex-col gap-1">
         {currentShowPosts.map(([series, posts_from_series], i) => (
-          <div key={i} className="bg-gray-900">
-            <div className="bg-yellow-500 p-2 text-black text-center text-xl font-semibold flex flex-col sticky z-30 top-0 md:static">
-              <a
-                target="_blank"
-                href={!sortByEpisode && `/artists/${series}`}
-                className={`${!sortByEpisode && 'hover:underline'} `}
-              >
-                {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
-                {posts_from_series.length} posts
-              </a>
-              {series === 'artist_unknown' && (
-                <button
-                  className=""
-                  onClick={(e) => {
-                    setShowUnknown(!showUnkown);
-                  }}
-                >
-                  <span className="bg-violet-700 text-white p-1">
-                    {showUnkown ? 'Hide' : 'Show'} Unkown
-                  </span>
-                </button>
-              )}
-            </div>
-            <div
-              className={`flex flex-row flex-wrap justify-center ${
-                series === 'artist_unknown' && !showUnkown ? 'hidden' : ''
-              }`}
-            >
-              {posts_from_series.map((post, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="group basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto"
-                  >
-                    <button
-                      onClick={(e) => {
-                        setVideoOpen(true);
-                        setCurrentVideo(post);
-                      }}
-                    >
-                      <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
-                        <p className="absolute flex h-full items-center invisible group-hover:visible ">
-                          {sortByEpisode ? `By ${post.artists.join(' ')}` : `${post.source}`}
-                        </p>
-                        <img src={post.preview_url}></img>
-                      </div>
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <ShowsCard
+            key={i}
+            series={series}
+            posts_from_series={posts_from_series}
+            setCurrentVideo={setCurrentVideo}
+            setVideoOpen={setVideoOpen}
+            sortByEpisode={sortByEpisode}
+          />
         ))}
       </div>
     </div>

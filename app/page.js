@@ -8,6 +8,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center pt-2 md:p-24">
       <div className="text-xl sm:text-3xl mb-2">Booru Browser</div>
+
       <div className="flex flex-col justify-center items-center">
         Browse by
         <div className="flex flex-row gap-1">
