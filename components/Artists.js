@@ -43,7 +43,7 @@ const Artists = ({ current }) => {
 
   return (
     <div className="">
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800 hover:underline z-50">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800 hover:underline z-50 invisible sm:visible">
         <button
           className="hover:underline"
           onClick={() => {
