@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import Link from 'next/link';
 import { useCollapse } from 'react-collapsed';
 
 const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, sortByEpisode }) => {
@@ -16,14 +16,13 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
           className="w-full"
         >
           <span className="float-left">{isExpanded ? '-' : '+'}</span>
-          <a
-            target="_blank"
-            href={!sortByEpisode && `/artists/${series}`}
+          <Link
+            href={!sortByEpisode ? `/artists/${series}` : ''}
             className={`${!sortByEpisode && 'hover:underline'} `}
           >
             {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
             {posts_from_series.length} posts
-          </a>
+          </Link>
         </button>
       </div>
 

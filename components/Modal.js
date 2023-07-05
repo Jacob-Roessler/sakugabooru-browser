@@ -4,6 +4,8 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
 
+import Link from 'next/link';
+
 export default function Example({ isOpen, setOpen, currentVideo, goFullscreen }) {
   const cancelButtonRef = useRef(null);
   const playerRef = useRef(null);
@@ -11,9 +13,12 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
   const handlePlay = () => {
     const player = playerRef.current;
 
-    if (player && goFullscreen) {
-      console.log(player.getInternalPlayer());
-      screenfull.request(player.getInternalPlayer());
+    if (goFullscreen && player) {
+      try {
+        screenfull.request(player.getInternalPlayer());
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -94,24 +99,23 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
                           {Object.hasOwn(currentVideo, 'artists') &&
                             currentVideo.artists.map((artist, index) => {
                               return (
-                                <a
+                                <Link
                                   key={index}
-                                  target="_blank"
                                   href={`/artists/${artist}`}
                                   className="hover:underline text-yellow-500"
                                 >
                                   {artist.replaceAll('_', ' ')}
-                                </a>
+                                </Link>
                               );
                             })}
                         </span>
-                        <a
+                        <Link
                           target="_blank"
                           href={`https://www.sakugabooru.com/post/show/${currentVideo.id}`}
                           className="hover:underline text-blue-300"
                         >
                           booru page
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

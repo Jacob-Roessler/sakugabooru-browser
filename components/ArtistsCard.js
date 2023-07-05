@@ -1,6 +1,7 @@
 import { useState } from 'react';
-
 import { useCollapse } from 'react-collapsed';
+
+import Link from 'next/link';
 
 const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo }) => {
   const [isExpanded, setExpanded] = useState(true);
@@ -19,9 +20,13 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
           {series.split(',').map((s, index) => {
             return (
               <>
-                <a key={index} target="_blank" href={`/shows/${s}`} className="hover:underline">
+                <Link
+                  key={index}
+                  href={`/shows/${s.replaceAll('/', '$')}`}
+                  className="hover:underline"
+                >
                   {series === 'undefined' ? 'Other' : s.replaceAll('_', ' ')}
-                </a>
+                </Link>
                 {' - '}
               </>
             );

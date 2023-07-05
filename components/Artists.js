@@ -4,14 +4,18 @@ import { useEffect, useState } from 'react';
 import Modal from './Modal';
 import ArtistsCard from './ArtistsCard';
 
+import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/Ri';
+
 const Artists = ({ current }) => {
   const [artists, setArtists] = useState([]);
+  const [artistsOffset, setArtistsOffset] = useState(0);
+
   const [searchArtists, setSearchArtists] = useState(current ? current : '');
   const [currentArtist, setCurrentArtist] = useState(current ? current : '');
   const [currentArtistPosts, setCurrentArtistPosts] = useState([]);
 
   const [videoOpen, setVideoOpen] = useState(false);
-  const [autoFullscreen, setAutoFullscreen] = useState(true);
+  const [autoFullscreen, setAutoFullscreen] = useState(false);
   const [currentVideo, setCurrentVideo] = useState({});
 
   useEffect(() => {
@@ -69,19 +73,46 @@ const Artists = ({ current }) => {
           }}
         ></button>
       </div>
-      <div className="flex justify-center">
+      <div className="flex flex-row content-center justify-center mb-2">
+        <button
+          className="bg-slate-800 px-2"
+          onClick={(e) => {
+            setArtistsOffset(Math.max(0, artistsOffset - 100));
+          }}
+        >
+          <RiArrowLeftSLine />
+        </button>
         <input
-          placeholder="Search Artists"
-          className="text-black p-1 mb-2 text-center"
-          onChange={(e) => setSearchArtists(e.target.value)}
+          placeholder={current ? `${current}` : `Search Artists`}
+          className="text-black p-2 text-center"
+          onChange={(e) => {
+            setArtistsOffset(0);
+            setSearchArtists(e.target.value);
+          }}
         ></input>
+        <button
+          className="bg-slate-800 px-2"
+          onClick={(e) => {
+            setArtistsOffset(
+              Math.min(
+                artists.filter((artist) => {
+                  return artist.name.includes(searchArtists.toLowerCase().replace(' ', '_'));
+                }).length - 100,
+                artistsOffset + 100
+              )
+            );
+          }}
+        >
+          {' '}
+          <RiArrowRightSLine />
+        </button>
       </div>
       <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">
         {artists
           .filter((artist) => {
             return artist.name.includes(searchArtists.toLowerCase().replace(' ', '_'));
           })
-          .slice(0, 100)
+          .slice(artistsOffset, artistsOffset + 100)
           .map((artist, index) => {
             return (
               <div
