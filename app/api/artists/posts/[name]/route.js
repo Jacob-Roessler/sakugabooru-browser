@@ -131,7 +131,12 @@ export async function GET(req, { params }) {
     .reverse();
 
   data = data.map(([series, posts], index) => {
-    return [series, posts.sort((a, b) => a.source.localeCompare(b.source))];
+    return [
+      series,
+      posts
+        .sort((a, b) => a.created_at - b.created_at)
+        .sort((a, b) => a.source.localeCompare(b.source)),
+    ];
   });
 
   return NextResponse.json({ data });

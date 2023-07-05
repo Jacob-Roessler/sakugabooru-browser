@@ -139,10 +139,11 @@ export async function GET(req, { params }) {
         return a[1].length - b[1].length;
       })
       .reverse();
-    data = data.map(([artist, posts], index) => {
-      return [artist, posts.sort((a, b) => a.source.localeCompare(b.source))];
-    });
   }
+
+  data = data.map(([series, posts], index) => {
+    return [series, posts.sort((a, b) => a.created_at - b.created_at)];
+  });
 
   return NextResponse.json({ data });
 }
