@@ -41,15 +41,30 @@ export default function Example({ isOpen, setOpen, currentVideo }) {
                         className="text-base font-semibold leading-6 text-white flex flex-col"
                       >
                         <span>
-                          {currentVideo.series.replaceAll('_', ' ')} -{' '}
-                          {currentVideo.source.replace('#', 'Episode ')}
+                          {Array.isArray(currentVideo.series)
+                            ? currentVideo.series.join(' - ').replaceAll('_', ' ')
+                            : currentVideo.series.replaceAll('_', ' ')}{' '}
+                          - {currentVideo.source.replace('#', 'Episode ')}
                         </span>
                         <span>
-                          {Object.hasOwn(currentVideo, 'artists') && currentVideo.artists.join(' ')}
+                          {Object.hasOwn(currentVideo, 'artists') &&
+                            currentVideo.artists.map((artist, index) => {
+                              return (
+                                <a
+                                  key={index}
+                                  target="_blank"
+                                  href={`/artists/${artist}`}
+                                  className="hover:underline"
+                                >
+                                  {artist.replaceAll('_', ' ')}
+                                </a>
+                              );
+                            })}
                         </span>
                         <a
                           target="_blank"
                           href={`https://www.sakugabooru.com/post/show/${currentVideo.id}`}
+                          className="hover:underline"
                         >
                           Go to sakugabooru page
                         </a>

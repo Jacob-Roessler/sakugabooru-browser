@@ -114,7 +114,7 @@ export async function GET(req, { params }) {
     ...post,
     series: post.tags
       .split(' ')
-      .filter((tag) => !general_tags.includes(tag) && !tagdata.includes(tag))?.[0],
+      .filter((tag) => !general_tags.includes(tag) && !tagdata.includes(tag)),
   }));
 
   let group_by_series = {};

@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import Modal from './Modal';
 
-const Shows = () => {
+const Shows = ({ current }) => {
   const [shows, setShows] = useState([]);
-  const [searchShows, setSearchShows] = useState('');
-  const [currentShow, setCurrentShow] = useState('');
+  const [searchShows, setSearchShows] = useState(current ? current : '');
+  const [currentShow, setCurrentShow] = useState(current ? current : '');
   const [currentShowPosts, setCurrentShowPosts] = useState([]);
   const [showUnkown, setShowUnknown] = useState(false);
 
@@ -113,8 +113,14 @@ const Shows = () => {
         {currentShowPosts.map(([series, posts_from_series], i) => (
           <div key={i} className="bg-gray-900">
             <div className="bg-yellow-500 p-2 text-black text-center text-xl font-semibold flex flex-col sticky top-0 md:static">
-              {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
-              {posts_from_series.length} posts
+              <a
+                target="_blank"
+                href={!sortByEpisode && `/artists/${series}`}
+                className={`${!sortByEpisode && 'hover:underline'} `}
+              >
+                {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
+                {posts_from_series.length} posts
+              </a>
               {series === 'artist_unknown' && (
                 <button
                   className=""
@@ -135,14 +141,22 @@ const Shows = () => {
             >
               {posts_from_series.map((post, index) => {
                 return (
-                  <div key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto">
+                  <div
+                    key={index}
+                    className="group basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto"
+                  >
                     <button
                       onClick={(e) => {
                         setVideoOpen(true);
                         setCurrentVideo(post);
                       }}
                     >
-                      <img src={post.preview_url}></img>
+                      <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
+                        <p className="absolute flex h-full items-center invisible group-hover:visible ">
+                          {post.artists && `By ${post.artists.join(' ')}`}
+                        </p>
+                        <img src={post.preview_url}></img>
+                      </div>
                     </button>
                   </div>
                 );
