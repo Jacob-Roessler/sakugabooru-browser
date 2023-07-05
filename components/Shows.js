@@ -59,16 +59,6 @@ const Shows = ({ current }) => {
 
   return (
     <div className="">
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800 hover:underline z-50 invisible sm:visible">
-        <button
-          className="hover:underline"
-          onClick={() => {
-            setAutoFullscreen(!autoFullscreen);
-          }}
-        >
-          Fullscreen {`${autoFullscreen ? 'Yes' : 'No'}`}
-        </button>{' '}
-      </div>
       <div>
         {currentVideo?.file_url && (
           <Modal
@@ -85,14 +75,35 @@ const Shows = ({ current }) => {
           }}
         ></button>
       </div>
-      <Pagination
-        setSearchTerm={setSearchShows}
-        searchTerm={searchShows}
-        offset={showsOffset}
-        setOffset={setShowsOffset}
-        list={shows}
-        pagination={pagination}
-      />
+      <div className="flex flex-row items-center justify-center text-sm sm:text-base mb-2">
+        <Pagination
+          setSearchTerm={setSearchShows}
+          searchTerm={searchShows}
+          offset={showsOffset}
+          setOffset={setShowsOffset}
+          list={shows}
+          pagination={pagination}
+        />
+
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800 z-50 invisible sm:visible">
+          <button
+            className="hover:underline "
+            onClick={() => {
+              setAutoFullscreen(!autoFullscreen);
+            }}
+          >
+            Fullscreen {`${autoFullscreen ? 'Yes' : 'No'}`}
+          </button>
+        </div>
+        <button
+          className="fixed bottom-0 right-0 p-4 bg-slate-800 z-50 hover:scale-105"
+          onClick={(e) => {
+            setSortByEpisode(!sortByEpisode);
+          }}
+        >
+          Sort by episode: {sortByEpisode ? 'Yes' : 'No'}
+        </button>
+      </div>
 
       <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">
         {shows
