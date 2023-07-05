@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-const xml2js = require('xml2js');
-var parser = new xml2js.Parser();
+
 const general_tags = [
   'animated',
   'effects',
@@ -93,24 +92,20 @@ export async function GET(req, { params }) {
 
   const groupByEpisode = 'false';
 
-  const response = await fetch(`https://www.sakugabooru.com/post.xml?limit=1000&tags=${title}`);
-  const xml = await response.text();
+  const response = await fetch(`https://www.sakugabooru.com/post.json?limit=1000&tags=${title}`);
+  let data = await response.json();
 
-  const json = await parser.parseStringPromise(xml);
-  if (json.posts['$'].count === '0') {
+  if (data.length === '0') {
     return NextResponse.json({ data: [['No posts', []]] });
   }
 
-  const tagresponse = await fetch('https://www.sakugabooru.com/tag.xml?type=1&limit=0');
-  const tagxml = await tagresponse.text();
+  const tagresponse = await fetch('https://www.sakugabooru.com/tag.json?type=1&limit=0');
+  let tagdata = await tagresponse.json();
 
-  const tagjson = await parser.parseStringPromise(tagxml);
-  let tagdata = tagjson.tags.tag.map((tag) => tag['$']);
   tagdata = tagdata.map((tagObj) => {
     return tagObj.name;
   });
 
-  let data = json.posts.post.map((p) => p['$']);
   data = data.map((post) => ({
     ...post,
     artists: post.tags

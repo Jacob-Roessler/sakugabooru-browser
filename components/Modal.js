@@ -21,7 +21,7 @@ export default function Example({ isOpen, setOpen, currentVideo }) {
           <div className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto">
+        <div className="fixed inset-0 z-10 overflow-y-auto text-xs md:text-base">
           <div className="flex min-h-full items-end justify-center p-4 text-center items-center p-0">
             <Transition.Child
               as={Fragment}
@@ -41,7 +41,7 @@ export default function Example({ isOpen, setOpen, currentVideo }) {
                         className="text-base font-semibold leading-6 text-white flex flex-col"
                       >
                         <button
-                          className="flex-0 "
+                          className="text-sm md:text-base"
                           onClick={(e) => {
                             navigator.clipboard.writeText(currentVideo.file_url);
                           }}
