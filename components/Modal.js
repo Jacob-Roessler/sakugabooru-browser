@@ -13,9 +13,24 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
 
     if (player && goFullscreen) {
       console.log(player.getInternalPlayer());
-      screenfull.request(player.getInternalPlayer());
+      let entered = screenfull.request(player.getInternalPlayer());
+      if (entered) {
+        return;
+      }
       try {
-        player.getInternalPlayer().webkitEnterFullscreen();
+        let videoElement = player.getInternalPlayer();
+        if (videoElement.requestFullscreen) {
+          videoElement.requestFullscreen();
+        } else if (videoElement.mozRequestFullScreen) {
+          // For Firefox
+          videoElement.mozRequestFullScreen();
+        } else if (videoElement.webkitRequestFullscreen) {
+          // For Safari and Chrome
+          videoElement.webkitRequestFullscreen();
+        } else if (videoElement.msRequestFullscreen) {
+          // For IE/Edge
+          videoElement.msRequestFullscreen();
+        }
       } catch (e) {}
     }
   };
