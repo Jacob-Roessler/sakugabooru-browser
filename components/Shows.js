@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Modal from './Modal';
 import ShowsCard from './ShowsCard';
 
-import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/Ri';
+import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 
 const Shows = ({ current }) => {
   const [shows, setShows] = useState([]);

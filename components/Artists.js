@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Modal from './Modal';
 import ArtistsCard from './ArtistsCard';
 
-import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/Ri';
+import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 
 const Artists = ({ current }) => {
   const [artists, setArtists] = useState([]);
