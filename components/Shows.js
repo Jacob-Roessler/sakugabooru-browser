@@ -79,6 +79,15 @@ const Shows = ({ current }) => {
           <button
             className="bg-slate-800 px-2"
             onClick={(e) => {
+              setShowsOffset(0);
+            }}
+          >
+            <RiArrowLeftSLine />
+            <RiArrowLeftSLine />
+          </button>
+          <button
+            className="bg-slate-800 px-2"
+            onClick={(e) => {
               setShowsOffset(Math.max(0, showsOffset - 50));
             }}
           >
@@ -105,6 +114,18 @@ const Shows = ({ current }) => {
               );
             }}
           >
+            <RiArrowRightSLine />
+          </button>
+          <button
+            className="bg-slate-800 px-2"
+            onClick={(e) => {
+              setShowsOffset(
+                shows.filter((s) => s.name.includes(searchShows.toLowerCase().replaceAll(' ', '_')))
+                  .length - 50
+              );
+            }}
+          >
+            <RiArrowRightSLine />
             <RiArrowRightSLine />
           </button>
         </div>

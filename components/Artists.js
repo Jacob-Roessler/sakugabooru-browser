@@ -77,6 +77,15 @@ const Artists = ({ current }) => {
         <button
           className="bg-slate-800 px-2"
           onClick={(e) => {
+            setArtistsOffset(0);
+          }}
+        >
+          <RiArrowLeftSLine />
+          <RiArrowLeftSLine />
+        </button>
+        <button
+          className="bg-slate-800 px-2"
+          onClick={(e) => {
             setArtistsOffset(Math.max(0, artistsOffset - 100));
           }}
         >
@@ -103,7 +112,19 @@ const Artists = ({ current }) => {
             );
           }}
         >
-          {' '}
+          <RiArrowRightSLine />
+        </button>
+        <button
+          className="bg-slate-800 px-2"
+          onClick={(e) => {
+            setArtistsOffset(
+              artists.filter((artist) => {
+                return artist.name.includes(searchArtists.toLowerCase().replace(' ', '_'));
+              }).length - 100
+            );
+          }}
+        >
+          <RiArrowRightSLine />
           <RiArrowRightSLine />
         </button>
       </div>
