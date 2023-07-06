@@ -1,7 +1,15 @@
 import React from 'react';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 
-const Pagination = ({ searchTerm, setSearchTerm, offset, setOffset, list, pagination }) => {
+const Pagination = ({
+  searchTerm,
+  setSearchTerm,
+  offset,
+  setOffset,
+  list,
+  pagination,
+  placeholder,
+}) => {
   let end;
   if (searchTerm === '') {
     end = list.length;
@@ -37,7 +45,7 @@ const Pagination = ({ searchTerm, setSearchTerm, offset, setOffset, list, pagina
         <RiArrowLeftSLine />
       </button>
       <input
-        placeholder={searchTerm ? `${searchTerm}` : `Search Artists`}
+        placeholder={searchTerm ? `${searchTerm}` : `Search ${placeholder}...`}
         className="text-black p-2 text-center"
         onChange={(e) => {
           setOffset(0);

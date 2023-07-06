@@ -78,6 +78,7 @@ const Artists = ({ current }) => {
         setOffset={setArtistsOffset}
         list={artists}
         pagination={pagination}
+        placeholder="Artists"
       />
 
       <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">

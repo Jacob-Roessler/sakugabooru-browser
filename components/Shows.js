@@ -79,6 +79,7 @@ const Shows = ({ current }) => {
           setOffset={setShowsOffset}
           list={shows}
           pagination={pagination}
+          placeholder="Series"
         />
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800 z-50 invisible sm:visible">

@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center pt-2 md:px-24">
       <div className="flex flex-col justify-center items-center">
-        Browse by
         <div className="flex flex-row gap-1">
           <button
             className={`p-1 bg-yellow-500 text-black hover:scale-110 ${
