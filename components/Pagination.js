@@ -45,8 +45,9 @@ const Pagination = ({
         <RiArrowLeftSLine />
       </button>
       <input
+        type="text"
         placeholder={`Search ${placeholder}...`}
-        className="text-black p-2 text-center focus:outline-none focus:shadow-md focus:shadow-gray-500"
+        className="text-black py-2 text-center focus:outline-none focus:shadow-md focus:shadow-gray-500 text-[16px]"
         onChange={(e) => {
           setOffset(0);
           setSearchTerm(e.target.value);
