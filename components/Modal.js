@@ -10,6 +10,8 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
   const cancelButtonRef = useRef(null);
   const playerRef = useRef(null);
 
+  const [showControls, setShowControls] = useState(false);
+
   const handlePlay = () => {
     const player = playerRef.current;
 
@@ -78,7 +80,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                             height={currentVideo.height}
                             playing={true}
                             loop={true}
-                            controls={window.screen.width >= 768}
+                            controls={window.screen.width >= 768 || showControls}
                             url={currentVideo.file_url}
                             className="w-[100%]"
                             onPlay={handlePlay}
@@ -137,14 +139,22 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                     Close
                   </button>
                   <button
-                    className="bg-blue-500 text-sm"
+                    className="bg-blue-500 text-sm px-1"
                     onClick={(e) => {
                       navigator.clipboard.writeText(currentVideo.file_url);
                     }}
                   >
                     Copy to clipboard
                   </button>
-                  <div className="basis-[100%] flex justify-end ">
+                  <button
+                    className="bg-blue-500 text-sm px-1 sm:invisible"
+                    onClick={(e) => {
+                      setShowControls(!showControls);
+                    }}
+                  >
+                    {`${showControls ? 'Hide' : 'Show'}`} Controls
+                  </button>
+                  <div className="basis-[100%] flex justify-end">
                     <button
                       className={` bg-green-600  ${currentVideo.index ? 'visible' : 'invisible'}`}
                       onClick={() => {
