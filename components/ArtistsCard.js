@@ -23,7 +23,10 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
                 <Link
                   key={s + index}
                   href={`/shows/${s.replaceAll('/', '$')}`}
-                  className="hover:underline"
+                  className="hover:underline z-50"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
                 >
                   {series === 'undefined' ? 'Other' : s.replaceAll('_', ' ')}
                 </Link>

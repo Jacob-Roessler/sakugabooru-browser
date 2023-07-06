@@ -70,9 +70,15 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
                           Copy to clipboard
                         </button>
                       </Dialog.Title>
-                      <div className="mt-2 flex flex-row justify-center">
+                      <div className="mt-2 flex flex-row justify-center ">
                         {currentVideo.file_ext !== 'mp4' && currentVideo.file_ext !== 'webm' ? (
-                          <img src={currentVideo.file_url} alt="image"></img>
+                          <div className="">
+                            <img
+                              src={currentVideo.file_url}
+                              alt="image"
+                              className="w-full max-h-[85vh]"
+                            ></img>
+                          </div>
                         ) : (
                           <ReactPlayer
                             ref={playerRef}
@@ -89,11 +95,21 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
                         )}
                       </div>
                       <div className="flex flex-row sm:flex-col justify-center items-center gap-1">
-                        <span>
+                        <span className="flex gap-2">
                           {Array.isArray(currentVideo.series)
-                            ? currentVideo.series.join(' - ').replaceAll('_', ' ')
+                            ? currentVideo.series.map((s, index) => {
+                                return (
+                                  <Link
+                                    key={index}
+                                    href={`/shows/${s}`}
+                                    className="hover:underline text-violet-500"
+                                  >
+                                    {s.replaceAll('_', ' ')}
+                                  </Link>
+                                );
+                              })
                             : currentVideo.series.replaceAll('_', ' ')}{' '}
-                          - {currentVideo.source.replace('#', 'Episode ')}
+                          {currentVideo.source}
                         </span>
                         <span className="flex gap-1">
                           {Object.hasOwn(currentVideo, 'artists') &&

@@ -18,7 +18,10 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
           <span className="float-left">{isExpanded ? '-' : '+'}</span>
           <Link
             href={!sortByEpisode ? `/artists/${series}` : ''}
-            className={`${!sortByEpisode && 'hover:underline'} `}
+            className={`${!sortByEpisode && 'hover:underline'} z-50`}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
           >
             {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
             {posts_from_series.length} posts
