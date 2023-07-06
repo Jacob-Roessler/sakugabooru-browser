@@ -62,6 +62,7 @@ const Shows = ({ current }) => {
             setOpen={setVideoOpen}
             currentVideo={{ ...currentVideo, series: currentShow }}
             goFullscreen={autoFullscreen}
+            setCurrentVideo={setCurrentVideo}
           />
         )}
 

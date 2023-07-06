@@ -1,12 +1,12 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { BiSkipPrevious, BiSkipNext } from 'react-icons/bi';
 import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
 
 import Link from 'next/link';
 
-export default function Example({ isOpen, setOpen, currentVideo, goFullscreen }) {
+export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, setCurrentVideo }) {
   const cancelButtonRef = useRef(null);
   const playerRef = useRef(null);
 
@@ -53,10 +53,10 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-900 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-screen max-w-6xl">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-900 shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-screen max-w-6xl">
                 <div className="bg-gray-900 pb-4 pt-5 sm:p-6 sm:pb-4 ">
                   <div className="">
-                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <div className="mt-3 sm:ml-4 sm:mt-0 ">
                       <Dialog.Title
                         as="h3"
                         className="text-base font-semibold leading-6 text-white flex flex-col"
@@ -71,30 +71,31 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
                         </button>
                       </Dialog.Title>
                       <div className="mt-2 flex flex-row justify-center ">
-                        {currentVideo.file_ext !== 'mp4' && currentVideo.file_ext !== 'webm' ? (
-                          <div className="">
+                        <div className="">
+                          {currentVideo.file_ext !== 'mp4' && currentVideo.file_ext !== 'webm' ? (
                             <img
                               src={currentVideo.file_url}
                               alt="image"
                               className="w-full max-h-[85vh]"
                             ></img>
-                          </div>
-                        ) : (
-                          <ReactPlayer
-                            ref={playerRef}
-                            playsinline={true}
-                            width={currentVideo.width}
-                            height={currentVideo.height}
-                            playing={true}
-                            loop={true}
-                            controls={true}
-                            url={currentVideo.file_url}
-                            className="w-[100%]"
-                            onPlay={handlePlay}
-                          />
-                        )}
+                          ) : (
+                            <ReactPlayer
+                              ref={playerRef}
+                              playsinline={true}
+                              width={currentVideo.width}
+                              height={currentVideo.height}
+                              playing={true}
+                              loop={true}
+                              controls={true}
+                              url={currentVideo.file_url}
+                              className="w-[100%]"
+                              onPlay={handlePlay}
+                            />
+                          )}
+                        </div>
                       </div>
-                      <div className="flex flex-row sm:flex-col justify-center items-center gap-1">
+
+                      <div className="flex flex-row sm:flex-col justify-center items-center gap-1 sm:gap-1">
                         <span className="flex gap-2">
                           {Array.isArray(currentVideo.series)
                             ? currentVideo.series.map((s, index) => {
@@ -111,7 +112,7 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
                             : currentVideo.series.replaceAll('_', ' ')}{' '}
                           {currentVideo.source}
                         </span>
-                        <span className="flex gap-1">
+                        <span className="flex gap-1 sm:gap-4 justify-between">
                           {Object.hasOwn(currentVideo, 'artists') &&
                             currentVideo.artists.map((artist, index) => {
                               return (
@@ -136,10 +137,42 @@ export default function Example({ isOpen, setOpen, currentVideo, goFullscreen })
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-900 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <div className="bg-gray-900 px-4 py-3 flex flex-row  sm:px-6 sm:justify-center sm:flex-col">
+                  <div className="basis-[50%] flex justify-center ">
+                    <button
+                      className={` bg-green-600  ${currentVideo.index ? 'visible' : 'invisible'}`}
+                      onClick={() => {
+                        let i = currentVideo.index;
+                        setCurrentVideo({
+                          ...currentVideo.other_posts[i - 1],
+                          other_posts: currentVideo.other_posts,
+                          index: i - 1,
+                        });
+                      }}
+                    >
+                      <BiSkipPrevious size={'60px'} />
+                    </button>
+                    <button
+                      className={`bg-green-600  ${
+                        currentVideo.index < currentVideo.other_posts.length - 1
+                          ? 'visible'
+                          : 'invisible'
+                      }`}
+                      onClick={() => {
+                        let i = currentVideo.index;
+                        setCurrentVideo({
+                          ...currentVideo.other_posts[i + 1],
+                          other_posts: currentVideo.other_posts,
+                          index: i + 1,
+                        });
+                      }}
+                    >
+                      <BiSkipNext size={'60px'} />
+                    </button>
+                  </div>
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                    className="basis-[50%] sm:w-[10%] sm:ml-[90%] p-3  bg-red-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 "
                     onClick={() => setOpen(false)}
                   >
                     Close

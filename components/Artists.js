@@ -61,6 +61,7 @@ const Artists = ({ current }) => {
             setOpen={setVideoOpen}
             currentVideo={currentVideo}
             goFullscreen={autoFullscreen}
+            setCurrentVideo={setCurrentVideo}
           />
         )}
 

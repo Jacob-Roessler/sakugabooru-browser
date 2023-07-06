@@ -52,7 +52,8 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
                       className=""
                       onClick={(e) => {
                         setVideoOpen(true);
-                        setCurrentVideo(post);
+
+                        setCurrentVideo({ ...post, other_posts: posts_from_series, index: index });
                       }}
                     >
                       <div className=" h-full w-full relative  text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">

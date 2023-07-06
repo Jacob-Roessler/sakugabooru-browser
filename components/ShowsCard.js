@@ -41,7 +41,7 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
                   <button
                     onClick={(e) => {
                       setVideoOpen(true);
-                      setCurrentVideo(post);
+                      setCurrentVideo({ ...post, other_posts: posts_from_series, index: index });
                     }}
                   >
                     <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center ">

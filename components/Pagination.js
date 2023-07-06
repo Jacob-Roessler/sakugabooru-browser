@@ -62,7 +62,7 @@ const Pagination = ({
           setSearchTerm('');
         }}
       >
-        <RxCross2 className="absolute right-2 -translate-y-1/2" />
+        <RxCross2 className="absolute right-2 -translate-y-1/2 bg-white scale-125 hover:scale-150" />
       </button>
       <button
         className={`bg-slate-800 px-2 ${
