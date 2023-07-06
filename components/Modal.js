@@ -71,28 +71,26 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                         </button>
                       </Dialog.Title>
                       <div className="mt-2 flex flex-row justify-center ">
-                        <div className="">
-                          {currentVideo.file_ext !== 'mp4' && currentVideo.file_ext !== 'webm' ? (
-                            <img
-                              src={currentVideo.file_url}
-                              alt="image"
-                              className="w-full max-h-[85vh]"
-                            ></img>
-                          ) : (
-                            <ReactPlayer
-                              ref={playerRef}
-                              playsinline={true}
-                              width={currentVideo.width}
-                              height={currentVideo.height}
-                              playing={true}
-                              loop={true}
-                              controls={true}
-                              url={currentVideo.file_url}
-                              className="w-[100%]"
-                              onPlay={handlePlay}
-                            />
-                          )}
-                        </div>
+                        {currentVideo.file_ext !== 'mp4' && currentVideo.file_ext !== 'webm' ? (
+                          <img
+                            src={currentVideo.file_url}
+                            alt="image"
+                            className="w-full max-h-[85vh]"
+                          ></img>
+                        ) : (
+                          <ReactPlayer
+                            ref={playerRef}
+                            playsinline={true}
+                            width={currentVideo.width}
+                            height={currentVideo.height}
+                            playing={true}
+                            loop={true}
+                            controls={true}
+                            url={currentVideo.file_url}
+                            className="w-[100%]"
+                            onPlay={handlePlay}
+                          />
+                        )}
                       </div>
 
                       <div className="flex flex-row sm:flex-col justify-center items-center gap-1 sm:gap-1">
