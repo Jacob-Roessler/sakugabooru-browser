@@ -29,10 +29,6 @@ const Artists = ({ current }) => {
   }, []);
 
   useEffect(() => {
-    console.log(currentVideo);
-  }, [searchArtists, currentVideo]);
-
-  useEffect(() => {
     if (currentArtist === '') {
       return;
     }

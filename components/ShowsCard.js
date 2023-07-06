@@ -32,7 +32,7 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
             {posts_from_series.map((post, index) => {
               return (
                 <div
-                  key={index}
+                  key={`${post.id}: ${index}`}
                   className="group basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto"
                 >
                   <button

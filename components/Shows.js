@@ -31,10 +31,6 @@ const Shows = ({ current }) => {
   }, []);
 
   useEffect(() => {
-    console.log(currentVideo);
-  }, [searchShows, currentVideo]);
-
-  useEffect(() => {
     if (currentShow === '') {
       return;
     }
@@ -113,7 +109,7 @@ const Shows = ({ current }) => {
             <div
               key={index}
               className={` ${
-                show.name === currentShow ? 'bg-green-500' : 'bg-violet-500'
+                show.name === currentShow.replaceAll('$', '/') ? 'bg-green-500' : 'bg-violet-500'
               } p-1 text-sm sm:text-base `}
             >
               <button

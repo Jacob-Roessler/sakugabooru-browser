@@ -21,7 +21,7 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
             return (
               <>
                 <Link
-                  key={index}
+                  key={s + index}
                   href={`/shows/${s.replaceAll('/', '$')}`}
                   className="hover:underline"
                 >
@@ -37,11 +37,13 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
 
       <section {...getCollapseProps()}>
         <div className="bg-gray-900">
-          {console.log(series)}
           <div className="flex flex-row flex-wrap  justify-center items-center">
             {posts_from_series.map((post, index) => {
               return (
-                <div key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto">
+                <div
+                  key={`${post.id}: ${index}`}
+                  className="basis-1/2 sm:basis-1/3 md:basis-1/6 2xl:basis-auto"
+                >
                   <div className="group w-full h-full z-10">
                     <button
                       className=""
