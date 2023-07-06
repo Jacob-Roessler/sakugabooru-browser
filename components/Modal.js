@@ -78,7 +78,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                             height={currentVideo.height}
                             playing={true}
                             loop={true}
-                            controls={true}
+                            controls={window.screen.width >= 768}
                             url={currentVideo.file_url}
                             className="w-[100%]"
                             onPlay={handlePlay}

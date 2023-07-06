@@ -8,7 +8,7 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
   const { getCollapseProps, getToggleProps } = useCollapse({ isExpanded });
 
   return (
-    <div className="text-sm md:text-xl">
+    <div className="sm:px-8 text-sm md:text-xl">
       <div className="bg-yellow-500 p-2 text-left font-semibold sticky z-30 top-0 md:static flex-row ">
         <button
           {...getToggleProps({
@@ -19,7 +19,7 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
           <span className="float-left">{isExpanded ? <AiOutlineMinus /> : <AiOutlinePlus />}</span>
           <span className="float-right">{posts_from_series.length} posts</span>
 
-          <span className="flex flex-row  justify-center gap-10">
+          <span className="flex flex-row  justify-center">
             <Link
               href={!sortByEpisode ? `/artists/${series}` : ''}
               className={`${!sortByEpisode && 'hover:underline'} z-50`}

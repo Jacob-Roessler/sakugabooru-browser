@@ -8,7 +8,7 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
   const { getCollapseProps, getToggleProps } = useCollapse({ isExpanded });
 
   return (
-    <div className="text-sm md:text-xl">
+    <div className="sm:px-8 text-sm md:text-xl">
       <div className="bg-violet-600 p-2 text-left font-semibold sticky z-30 top-0 md:static ">
         <button
           {...getToggleProps({
@@ -16,10 +16,12 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
           })}
           className="w-full"
         >
-          <span className="float-left">{isExpanded ? <AiOutlineMinus /> : <AiOutlinePlus />}</span>
-          <span className="float-right">{posts_from_series.length} posts</span>
+          <span className="float-left mr-1">
+            {isExpanded ? <AiOutlineMinus /> : <AiOutlinePlus />}
+          </span>
+          <span className="float-right">{posts_from_series.length}</span>
 
-          <span className="flex flex-row  justify-center gap-10">
+          <span className="flex flex-row gap-2 ">
             {series.split(',').map((s, index) => {
               return (
                 <>
@@ -33,7 +35,6 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
                   >
                     {series === 'undefined' ? 'Other' : s.replaceAll('_', ' ')}
                   </Link>
-                  {'  '}
                 </>
               );
             })}
@@ -43,7 +44,7 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
 
       <section {...getCollapseProps()}>
         <div className="bg-gray-900">
-          <div className="flex flex-row flex-wrap  justify-center items-center">
+          <div className="flex flex-row flex-wrap  justify-center items-center ">
             {posts_from_series.map((post, index) => {
               return (
                 <div
