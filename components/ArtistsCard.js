@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useCollapse } from 'react-collapsed';
-
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import Link from 'next/link';
 
 const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo }) => {
@@ -9,32 +9,35 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
 
   return (
     <div className="text-sm md:text-xl">
-      <div className="bg-violet-600 p-2 text-left font-semibold sticky z-30 top-0 md:static flex-row ">
+      <div className="bg-violet-600 p-2 text-left font-semibold sticky z-30 top-0 md:static ">
         <button
           {...getToggleProps({
             onClick: () => setExpanded((prevExpanded) => !prevExpanded),
           })}
           className="w-full"
         >
-          <span className="float-left">{isExpanded ? '-' : '+'}</span>
-          {series.split(',').map((s, index) => {
-            return (
-              <>
-                <Link
-                  key={s + index}
-                  href={`/shows/${s.replaceAll('/', '$')}`}
-                  className="hover:underline z-50"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  {series === 'undefined' ? 'Other' : s.replaceAll('_', ' ')}
-                </Link>
-                {' - '}
-              </>
-            );
-          })}
-          {posts_from_series.length} posts
+          <span className="float-left">{isExpanded ? <AiOutlineMinus /> : <AiOutlinePlus />}</span>
+          <span className="float-right">{posts_from_series.length} posts</span>
+
+          <span className="flex flex-row  justify-center gap-10">
+            {series.split(',').map((s, index) => {
+              return (
+                <>
+                  <Link
+                    key={s + index}
+                    href={`/shows/${s.replaceAll('/', '$')}`}
+                    className="hover:underline z-50 w-fit"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    {series === 'undefined' ? 'Other' : s.replaceAll('_', ' ')}
+                  </Link>
+                  {'  '}
+                </>
+              );
+            })}
+          </span>
         </button>
       </div>
 

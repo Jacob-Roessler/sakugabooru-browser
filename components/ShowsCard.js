@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { useCollapse } from 'react-collapsed';
 
 const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, sortByEpisode }) => {
@@ -15,17 +16,20 @@ const ShowsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo, s
           })}
           className="w-full"
         >
-          <span className="float-left">{isExpanded ? '-' : '+'}</span>
-          <Link
-            href={!sortByEpisode ? `/artists/${series}` : ''}
-            className={`${!sortByEpisode && 'hover:underline'} z-50`}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')} -{' '}
-            {posts_from_series.length} posts
-          </Link>
+          <span className="float-left">{isExpanded ? <AiOutlineMinus /> : <AiOutlinePlus />}</span>
+          <span className="float-right">{posts_from_series.length} posts</span>
+
+          <span className="flex flex-row  justify-center gap-10">
+            <Link
+              href={!sortByEpisode ? `/artists/${series}` : ''}
+              className={`${!sortByEpisode && 'hover:underline'} z-50`}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              {series === 'undefined' ? 'Other' : series.replaceAll('_', ' ')}
+            </Link>
+          </span>
         </button>
       </div>
 

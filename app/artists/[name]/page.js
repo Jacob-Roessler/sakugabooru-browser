@@ -10,7 +10,7 @@ export default function Page({ params }) {
       <div className="flex flex-col justify-center items-center">
         <div className="flex flex-row gap-1">
           <button
-            className={`p-2 bg-yellow-500 text-black hover:scale-110 ${
+            className={`p-1 bg-yellow-500 text-black hover:scale-110 ${
               viewMode === 'artists' && 'scale-110 shadow-lg shadow-yellow-500/50 '
             }`}
             onClick={(e) => {

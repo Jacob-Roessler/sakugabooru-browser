@@ -43,7 +43,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto text-xs md:text-base">
-          <div className="flex min-h-full items-end justify-center p-4 text-center items-center p-0 max-h-[90vh]">
+          <div className="flex min-h-full  justify-center text-center items-center p-0 max-h-[90vh]">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -53,30 +53,23 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-900 shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-screen max-w-6xl">
-                <div className="bg-gray-900 pb-4 pt-5 sm:p-6 sm:pb-4 ">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-900 shadow-xl transition-all sm:w-full sm:max-w-screen max-w-6xl">
+                <div className="bg-gray-900 pb-4 pt-5">
                   <div className="">
-                    <div className="mt-3 sm:ml-4 sm:mt-0 ">
+                    <div className="mt-3">
                       <Dialog.Title
                         as="h3"
                         className="text-base font-semibold leading-6 text-white flex flex-col"
-                      >
-                        <button
-                          className="text-sm md:text-base"
-                          onClick={(e) => {
-                            navigator.clipboard.writeText(currentVideo.file_url);
-                          }}
-                        >
-                          Copy to clipboard
-                        </button>
-                      </Dialog.Title>
+                      ></Dialog.Title>
                       <div className="mt-2 flex flex-row justify-center ">
                         {currentVideo.file_ext !== 'mp4' && currentVideo.file_ext !== 'webm' ? (
-                          <img
-                            src={currentVideo.file_url}
-                            alt="image"
-                            className="w-full max-h-[85vh]"
-                          ></img>
+                          <div>
+                            <img
+                              src={currentVideo.file_url}
+                              alt="image"
+                              className="w-full max-h-[85vh] max-w-[95vh]"
+                            ></img>
+                          </div>
                         ) : (
                           <ReactPlayer
                             ref={playerRef}
@@ -93,7 +86,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                         )}
                       </div>
 
-                      <div className="flex flex-row sm:flex-col justify-center items-center gap-1 sm:gap-1">
+                      <div className="flex flex-row  justify-center items-center gap-1 sm:gap-4">
                         <span className="flex gap-2">
                           {Array.isArray(currentVideo.series)
                             ? currentVideo.series.map((s, index) => {
@@ -110,7 +103,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                             : currentVideo.series.replaceAll('_', ' ')}{' '}
                           {currentVideo.source}
                         </span>
-                        <span className="flex gap-1 sm:gap-4 justify-between">
+                        <span className="flex gap-1 break-all sm:break-normal sm:gap-4 justify-between">
                           {Object.hasOwn(currentVideo, 'artists') &&
                             currentVideo.artists.map((artist, index) => {
                               return (
@@ -135,8 +128,23 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-900 px-4 py-3 flex flex-row  sm:px-6 sm:justify-center sm:flex-col">
-                  <div className="basis-[50%] flex justify-center ">
+                <div className="bg-gray-900 flex flex-row justify-center">
+                  <button
+                    type="button"
+                    className=" float-left bg-red-600 text-sm p-3 font-semibold text-white shadow-sm hover:bg-red-500 "
+                    onClick={() => setOpen(false)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="bg-blue-500 text-sm"
+                    onClick={(e) => {
+                      navigator.clipboard.writeText(currentVideo.file_url);
+                    }}
+                  >
+                    Copy to clipboard
+                  </button>
+                  <div className="basis-[100%] flex justify-end ">
                     <button
                       className={` bg-green-600  ${currentVideo.index ? 'visible' : 'invisible'}`}
                       onClick={() => {
@@ -168,13 +176,6 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                       <BiSkipNext size={'60px'} />
                     </button>
                   </div>
-                  <button
-                    type="button"
-                    className="basis-[50%] sm:w-[10%] sm:ml-[90%] p-3  bg-red-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 "
-                    onClick={() => setOpen(false)}
-                  >
-                    Close
-                  </button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
