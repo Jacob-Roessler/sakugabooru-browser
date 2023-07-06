@@ -132,14 +132,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                 </div>
                 <div className="bg-gray-900 flex flex-row justify-center">
                   <button
-                    type="button"
-                    className=" float-left bg-red-600 text-sm p-3 font-semibold text-white shadow-sm hover:bg-red-500 "
-                    onClick={() => setOpen(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-blue-500 text-sm px-1"
+                    className="bg-blue-500 text-sm "
                     onClick={(e) => {
                       navigator.clipboard.writeText(currentVideo.file_url);
                     }}
@@ -147,7 +140,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                     Copy to clipboard
                   </button>
                   <button
-                    className="bg-blue-500 text-sm px-1 sm:invisible"
+                    className="bg-blue-500 text-sm sm:invisible"
                     onClick={(e) => {
                       setShowControls(!showControls);
                     }}
@@ -155,6 +148,13 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                     {`${showControls ? 'Hide' : 'Show'}`} Controls
                   </button>
                   <div className="basis-[100%] flex justify-end">
+                    <button
+                      type="button"
+                      className=" float-left bg-red-600 text-sm p-3 font-semibold text-white shadow-sm hover:bg-red-500 md:hidden"
+                      onClick={() => setOpen(false)}
+                    >
+                      Close
+                    </button>
                     <button
                       className={` bg-green-600  ${currentVideo.index ? 'visible' : 'invisible'}`}
                       onClick={() => {
