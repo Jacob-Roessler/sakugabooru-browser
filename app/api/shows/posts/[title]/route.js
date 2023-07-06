@@ -109,50 +109,41 @@ export async function GET(req, { params }) {
 
   const tagresponse = await fetch('https://www.sakugabooru.com/tag.json?type=1&limit=0');
   let tagdata = await tagresponse.json();
+  let artistsTags = {};
+  let generalTags = {};
 
-  tagdata = tagdata.map((tagObj) => {
-    return tagObj.name;
+  tagdata.forEach((tagObj) => {
+    artistsTags[tagObj.name] = 'artist';
+  });
+
+  general_tags.forEach((tag) => {
+    generalTags[tag] = 'general';
   });
 
   data = data.map((post) => ({
     ...post,
-    artists: post.tags
-      .split(' ')
-      .filter((tag) => !general_tags.includes(tag) && tagdata.includes(tag)),
+    artists: post.tags.split(' ').filter((tag) => !(tag in generalTags) && tag in artistsTags),
     source: post.source.includes('#') ? post.source : `Source: ${post.source}`,
   }));
 
   let grouped = {};
-  if (groupByEpisode === 'true') {
-    data.forEach((post) => {
-      if (post.source.indexOf('Source:') > 0) {
-        'Other' in grouped ? grouped['Other'].push(post) : (grouped['Other'] = [post]);
-      } else {
-        post.source in grouped ? grouped[post.source].push(post) : (grouped[post.source] = [post]);
-      }
-    });
 
-    data = Object.entries(grouped).sort((a, b) => {
-      return a[0].localeCompare(b[0]);
+  data.forEach((post) => {
+    post.artists.forEach((artist) => {
+      artist in grouped ? grouped[artist].push(post) : (grouped[artist] = [post]);
     });
-  } else {
-    data.forEach((post) => {
-      post.artists.forEach((artist) => {
-        artist in grouped ? grouped[artist].push(post) : (grouped[artist] = [post]);
-      });
-    });
-    data = Object.entries(grouped)
-      .sort((a, b) => {
-        return a[1].length - b[1].length;
-      })
-      .reverse();
-  }
+  });
+
+  //Sort artists in series by greatest number of ontributions if contributions are the same then sort by name (ascending)
+  data = Object.entries(grouped).sort((a, b) => {
+    return b[1].length - a[1].length || a[0].localeCompare(b[0]);
+  });
+
+  //Sort posts by an artist by the source (starting at 1) then by when it was created (earliest first)
   data = data.map(([series, posts], index) => {
     return [
       series,
-      posts
-        .sort((a, b) => a.created_at - b.created_at)
-        .sort((a, b) => a.source.localeCompare(b.source)),
+      posts.sort((a, b) => a.source.localeCompare(b.source) || a.created_at - b.created_at),
     ];
   });
 

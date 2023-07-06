@@ -110,7 +110,7 @@ const Artists = ({ current }) => {
           })}
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 mb-16">
         {currentArtistPosts.map(([series, posts_from_series], i) => (
           <ArtistsCard
             setVideoOpen={setVideoOpen}

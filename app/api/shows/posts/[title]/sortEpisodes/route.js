@@ -109,48 +109,39 @@ export async function GET(req, { params }) {
 
   const tagresponse = await fetch('https://www.sakugabooru.com/tag.json?type=1&limit=0');
   let tagdata = await tagresponse.json();
+  let artistsTags = {};
+  let generalTags = {};
 
-  tagdata = tagdata.map((tagObj) => {
-    return tagObj.name;
+  tagdata.forEach((tagObj) => {
+    artistsTags[tagObj.name] = 'artist';
+  });
+
+  general_tags.forEach((tag) => {
+    generalTags[tag] = 'general';
   });
 
   data = data.map((post) => ({
     ...post,
-    artists: post.tags
-      .split(' ')
-      .filter((tag) => !general_tags.includes(tag) && tagdata.includes(tag)),
+    artists: post.tags.split(' ').filter((tag) => !(tag in generalTags) && tag in artistsTags),
     source: post.source.includes('#') ? post.source : `Source: ${post.source}`,
   }));
 
   let grouped = {};
-  if (groupByEpisode === 'true') {
-    data.forEach((post) => {
-      let s = post.source.trim();
-      if (s[0] === '#') {
-        s = s.split(' ')[0];
-        s in grouped ? grouped[s].push(post) : (grouped[s] = [post]);
-      } else {
-        'Non-Episode Source' in grouped
-          ? grouped['Non-Episode Source'].push(post)
-          : (grouped['Non-Episode Source'] = [post]);
-      }
-    });
+  data.forEach((post) => {
+    let s = post.source.trim();
+    if (s[0] === '#') {
+      s = s.split(' ')[0];
+      s in grouped ? grouped[s].push(post) : (grouped[s] = [post]);
+    } else {
+      'Non-Episode Source' in grouped
+        ? grouped['Non-Episode Source'].push(post)
+        : (grouped['Non-Episode Source'] = [post]);
+    }
+  });
 
-    data = Object.entries(grouped).sort((a, b) => {
-      return a[0].localeCompare(b[0]);
-    });
-  } else {
-    data.forEach((post) => {
-      post.artists.forEach((artist) => {
-        artist in grouped ? grouped[artist].push(post) : (grouped[artist] = [post]);
-      });
-    });
-    data = Object.entries(grouped)
-      .sort((a, b) => {
-        return a[1].length - b[1].length;
-      })
-      .reverse();
-  }
+  data = Object.entries(grouped).sort((a, b) => {
+    return a[0].localeCompare(b[0]);
+  });
 
   data = data.map(([series, posts], index) => {
     return [series, posts.sort((a, b) => a.created_at - b.created_at)];

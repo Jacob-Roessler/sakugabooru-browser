@@ -108,16 +108,20 @@ export async function GET(req, { params }) {
 
   const tagresponse = await fetch('https://www.sakugabooru.com/tag.json?type=1&limit=0');
   let tagdata = await tagresponse.json();
+  let artistsTags = {};
+  let generalTags = {};
 
-  tagdata = tagdata.map((tagObj) => {
-    return tagObj.name;
+  tagdata.forEach((tagObj) => {
+    artistsTags[tagObj.name] = 'artist';
+  });
+
+  general_tags.forEach((tag) => {
+    generalTags[tag] = 'general';
   });
 
   data = data.map((post) => ({
     ...post,
-    series: post.tags
-      .split(' ')
-      .filter((tag) => !general_tags.includes(tag) && !tagdata.includes(tag)),
+    series: post.tags.split(' ').filter((tag) => !(tag in generalTags) && !(tag in artistsTags)),
   }));
 
   let group_by_series = {};
@@ -127,18 +131,16 @@ export async function GET(req, { params }) {
       : (group_by_series[post.series] = [post]);
   });
 
-  data = Object.entries(group_by_series)
-    .sort((a, b) => {
-      return a[1].length - b[1].length;
-    })
-    .reverse();
+  //Sort series by greatest number of artist contributions if contributions are the same then sort by name (ascending)
+  data = Object.entries(group_by_series).sort((a, b) => {
+    return b[1].length - a[1].length || a[0].localeCompare(b[0]);
+  });
 
+  //Sort posts in a series by the source (starting at 1) then by when it was created (earliest first)
   data = data.map(([series, posts], index) => {
     return [
       series,
-      posts
-        .sort((a, b) => a.created_at - b.created_at)
-        .sort((a, b) => a.source.localeCompare(b.source)),
+      posts.sort((a, b) => a.source.localeCompare(b.source) || a.created_at - b.created_at),
     ];
   });
 

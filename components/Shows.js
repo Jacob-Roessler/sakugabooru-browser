@@ -127,7 +127,7 @@ const Shows = ({ current }) => {
           ))}
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 mb-16">
         {currentShowPosts.map(([series, posts_from_series], i) => (
           <ShowsCard
             key={i}
