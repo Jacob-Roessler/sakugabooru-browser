@@ -88,8 +88,8 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                         )}
                       </div>
 
-                      <div className="flex flex-row  justify-center  gap-1 sm:gap-4 px-2 sm:px-12 sm:py-2">
-                        <span className="flex sm:flex-col justify-end flex-wrap basis-1/2 text-end">
+                      <div className="flex flex-row gap-1 sm:gap-4 px-2 sm:px-12 sm:py-2">
+                        <span className="flex sm:flex-col flex-wrap basis-1/2 text-end">
                           {currentVideo.series.map((s, index) => {
                             return (
                               <Link
@@ -117,10 +117,10 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                               .replace(/\..*/, '')}
                           </Link>
                         ) : (
-                          currentVideo.source
+                          `${currentVideo.source === '' ? 'Source: None' : currentVideo.source}`
                         )}
                         <span
-                          className={`flex flex-wrap break-all sm:break-normal gap-1 sm:gap-2 justify-start basis-1/2 ${
+                          className={`flex flex-wrap break-all sm:break-normal gap-1 sm:gap-2 basis-1/2 ${
                             currentVideo.artists.length > 3 ? 'text-xs' : ''
                           }`}
                         >
