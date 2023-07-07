@@ -66,15 +66,16 @@ const ArtistsCard = ({
                         setCurrentVideo({ ...post, other_posts: posts_from_series, index: index });
                       }}
                     >
-                      <div className=" h-full w-full relative  text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
-                        <p className="absolute flex flex-col h-full items-center justify-center invisible group-hover:visible break-all text-xs">
+                      <div className=" h-full w-full relative  text-blue-300 text-2xl flex text-center justify-center align-middle content-center">
+                        <p className="absolute flex flex-col h-full items-center justify-center invisible group-hover:visible text-xs px-2">
                           <>
                             <span className="text-yellow-500">{post.artists.join(' - ')}</span>
                             <span className="text-violet-500">
                               {post.series.filter((s) => !s.includes(currentArtist)).join(' ')}
                             </span>{' '}
                             <span className="text-white">
-                              {post.source.includes('Source') ? post.source : ''}
+                              {' '}
+                              {post.source !== '' ? post.source : 'Source: None'}
                             </span>
                           </>
                         </p>
