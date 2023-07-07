@@ -81,11 +81,11 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                       </Dialog.Title>
                       <div className="mt-2 flex flex-row justify-center ">
                         {currentVideo.file_ext !== 'mp4' && currentVideo.file_ext !== 'webm' ? (
-                          <div className="relative aspect-auto w-full h-full">
+                          <div className="relative aspect-auto">
                             <img
                               src={currentVideo.file_url}
                               alt="image"
-                              className=" w-full h-full object-scale-down"
+                              className="w-full h-full"
                             ></img>
                           </div>
                         ) : (
