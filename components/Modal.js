@@ -89,13 +89,13 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                       </div>
 
                       <div className="flex flex-row gap-1 sm:gap-4 px-2 sm:px-12 sm:py-2">
-                        <span className="flex sm:flex-col flex-wrap basis-1/2 text-end">
+                        <span className="flex flex-col flex-wrap basis-1/2 text-end">
                           {currentVideo.series.map((s, index) => {
                             return (
                               <Link
                                 key={index}
                                 href={`/shows/${s}`}
-                                className={`sm:basis-1 hover:underline  text-violet-500 ${
+                                className={`hover:underline  text-violet-500 ${
                                   currentVideo?.selected_series === s ? 'text-green-500' : ''
                                 }`}
                               >
