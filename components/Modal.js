@@ -45,7 +45,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto text-xs md:text-base">
-          <div className="flex min-h-full  justify-center text-center items-center p-0 max-h-[90vh]">
+          <div className="flex min-h-full  justify-center text-center items-center ">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -55,36 +55,54 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-900 shadow-xl transition-all sm:w-full sm:max-w-screen max-w-6xl">
-                <div className="bg-gray-900 pb-4 pt-5">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-900 shadow-xl transition-all sm:w-full sm:max-w-screen max-w-7xl">
+                <div className="bg-gray-900">
                   <div className="">
-                    <div className="mt-3">
+                    <div className="">
                       <Dialog.Title
                         as="h3"
                         className="text-base font-semibold leading-6 text-white flex flex-col"
-                      ></Dialog.Title>
+                      >
+                        {currentVideo.source.includes('http') ? (
+                          <Link
+                            target="_blank"
+                            href={currentVideo.source.split('Source: ')[1]}
+                            className="text-blue-200 hover:underline"
+                          >
+                            {currentVideo.source
+                              .split('Source: ')[1]
+                              .replace(/^https?:\/\//, '')
+                              .replace(/^www\./, '')
+                              .replace(/\..*/, '')}
+                          </Link>
+                        ) : (
+                          `${currentVideo.source === '' ? 'Source: None' : currentVideo.source}`
+                        )}
+                      </Dialog.Title>
                       <div className="mt-2 flex flex-row justify-center ">
                         {currentVideo.file_ext !== 'mp4' && currentVideo.file_ext !== 'webm' ? (
-                          <div>
+                          <div className="relative aspect-auto w-full h-full">
                             <img
                               src={currentVideo.file_url}
                               alt="image"
-                              className="w-full max-h-[85vh] max-w-[95vh]"
+                              className=" w-full h-full object-scale-down"
                             ></img>
                           </div>
                         ) : (
-                          <ReactPlayer
-                            ref={playerRef}
-                            playsinline={true}
-                            width={currentVideo.width}
-                            height={currentVideo.height}
-                            playing={true}
-                            loop={true}
-                            controls={window.screen.width >= 768 || showControls}
-                            url={currentVideo.file_url}
-                            className="w-[100%]"
-                            onPlay={handlePlay}
-                          />
+                          <div className="relative aspect-auto w-full h-full">
+                            <ReactPlayer
+                              ref={playerRef}
+                              playsinline={true}
+                              width={'100%'}
+                              height={'100%'}
+                              playing={true}
+                              loop={true}
+                              controls={window.screen.width >= 768 || showControls}
+                              url={currentVideo.file_url}
+                              className=" object-fill"
+                              onPlay={handlePlay}
+                            />
+                          </div>
                         )}
                       </div>
 
@@ -104,21 +122,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                             );
                           })}{' '}
                         </span>
-                        {currentVideo.source.includes('http') ? (
-                          <Link
-                            target="_blank"
-                            href={currentVideo.source.split('Source: ')[1]}
-                            className="text-blue-200 hover:underline"
-                          >
-                            {currentVideo.source
-                              .split('Source: ')[1]
-                              .replace(/^https?:\/\//, '')
-                              .replace(/^www\./, '')
-                              .replace(/\..*/, '')}
-                          </Link>
-                        ) : (
-                          `${currentVideo.source === '' ? 'Source: None' : currentVideo.source}`
-                        )}
+                        <score>Score: {currentVideo.score}</score>
                         <span
                           className={`flex flex-wrap break-all sm:break-normal gap-1 sm:gap-2 basis-1/2 ${
                             currentVideo.artists.length > 3 ? 'text-xs' : ''
@@ -169,7 +173,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                   <div className="basis-[100%] flex justify-end">
                     <button
                       type="button"
-                      className=" float-left bg-red-600 text-sm p-3 font-semibold text-white shadow-sm hover:bg-red-500 md:hidden"
+                      className=" float-left bg-red-600 text-sm p-3 font-semibold text-white shadow-sm hover:bg-red-500"
                       onClick={() => setOpen(false)}
                     >
                       Close

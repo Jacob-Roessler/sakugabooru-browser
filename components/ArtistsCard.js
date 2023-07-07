@@ -72,11 +72,11 @@ const ArtistsCard = ({
                             <span className="text-yellow-500">{post.artists.join(' - ')}</span>
                             <span className="text-violet-500">
                               {post.series.filter((s) => !s.includes(currentArtist)).join(' ')}
-                            </span>{' '}
+                            </span>
                             <span className="text-white">
-                              {' '}
                               {post.source !== '' ? post.source : 'Source: None'}
                             </span>
+                            <span>Score: {post.score}</span>
                           </>
                         </p>
                         <img className="group-hover:opacity-20" src={post.preview_url}></img>
