@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import Modal from './Modal';
 import ArtistsCard from './ArtistsCard';
 import Pagination from './Pagination';
+import UseKeyboardShortcuts from './UseKeyboardShortcuts';
 
 const pagination = 50;
 
@@ -42,40 +43,18 @@ const Artists = ({ current }) => {
       });
   }, [currentArtist]);
 
-  // handle what happens on key press
-  const handleKeyPress = useCallback(
-    (event) => {
-      let target = event.target || event.srcElement;
-      const targetTagName = target.nodeType == 1 ? target.nodeName.toUpperCase() : '';
-      if (/INPUT|SELECT|TEXTAREA/.test(targetTagName)) {
-        return;
-      }
-
-      if (event.key.toLowerCase() === 'f') {
-        setAutoFullscreen(!autoFullscreen);
-      } else if (event.key === 'ArrowLeft') {
-        setArtistsOffset(Math.max(0, artistsOffset - pagination));
-      } else if (event.key === 'ArrowRight') {
-        setArtistsOffset(artistsOffset + pagination);
-      }
-      console.log(`Key pressed: ${event.key}`);
-    },
-    [autoFullscreen, artistsOffset]
-  );
-
-  useEffect(() => {
-    // attach the event listener
-    document.addEventListener('keydown', handleKeyPress);
-
-    // remove the event listener
-    return () => {
-      document.removeEventListener('keydown', handleKeyPress);
-    };
-  }, [handleKeyPress]);
-
   return (
     <div className="">
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800 hover:underline z-50 invisible sm:visible">
+        <UseKeyboardShortcuts
+          setAutoFullscreen={setAutoFullscreen}
+          autoFullscreen={autoFullscreen}
+          offset={artistsOffset}
+          setOffset={setArtistsOffset}
+          setSearch={setSearchArtists}
+          search={searchArtists}
+          pagination={pagination}
+        />
         <button
           className="hover:underline"
           onClick={() => {

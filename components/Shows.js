@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import Modal from './Modal';
 import ShowsCard from './ShowsCard';
 import Pagination from './Pagination';
+import UseKeyboardShortcuts from './UseKeyboardShortcuts';
 
 const pagination = 50;
 
@@ -53,46 +54,20 @@ const Shows = ({ current }) => {
     }
   }, [currentShow, sortByEpisode]);
 
-  // handle what happens on key press
-  const handleKeyPress = useCallback(
-    (event) => {
-      let target = event.target || event.srcElement;
-      const targetTagName = target.nodeType == 1 ? target.nodeName.toUpperCase() : '';
-      if (/INPUT|SELECT|TEXTAREA/.test(targetTagName)) {
-        return;
-      }
-
-      if (event.key.toLowerCase() === 'f') {
-        setAutoFullscreen(!autoFullscreen);
-      } else if (event.key === 'ArrowLeft') {
-        setShowsOffset(Math.max(0, showsOffset - pagination));
-      } else if (event.key === 'ArrowRight') {
-        setShowsOffset(showsOffset + pagination);
-      } else if (
-        event.key.toLowerCase() === 's' ||
-        event.key === 'ArrowDown' ||
-        event.key === 'ArrowUp'
-      ) {
-        setSortByEpisode(!sortByEpisode);
-      }
-      console.log(`Key pressed: ${event.key}`);
-    },
-    [autoFullscreen, showsOffset, sortByEpisode]
-  );
-
-  useEffect(() => {
-    // attach the event listener
-    document.addEventListener('keydown', handleKeyPress);
-
-    // remove the event listener
-    return () => {
-      document.removeEventListener('keydown', handleKeyPress);
-    };
-  }, [handleKeyPress]);
-
   return (
     <div className="">
       <div>
+        <UseKeyboardShortcuts
+          setAutoFullscreen={setAutoFullscreen}
+          autoFullscreen={autoFullscreen}
+          offset={showsOffset}
+          setOffset={setShowsOffset}
+          setSearch={setSearchShows}
+          search={searchShows}
+          pagination={pagination}
+          setSortByEpisode={setSortByEpisode}
+          sortByEpisode={sortByEpisode}
+        />
         {currentVideo?.file_url && (
           <Modal
             isOpen={videoOpen}
