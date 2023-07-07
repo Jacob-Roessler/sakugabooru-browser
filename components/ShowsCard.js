@@ -21,10 +21,12 @@ const ShowsCard = ({
           {...getToggleProps({
             onClick: () => setExpanded((prevExpanded) => !prevExpanded),
           })}
-          className="w-full"
+          className="w-full relative"
         >
-          <span className="float-left">{isExpanded ? <AiOutlineMinus /> : <AiOutlinePlus />}</span>
-          <span className="float-right">{posts_from_artist.length} posts</span>
+          <span className="absolute left-0">
+            {isExpanded ? <AiOutlineMinus /> : <AiOutlinePlus />}
+          </span>
+          <span className="absolute right-0">{posts_from_artist.length} posts</span>
 
           <span className="flex flex-row  justify-center">
             <Link
