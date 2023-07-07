@@ -15,7 +15,7 @@ const ArtistsCard = ({
 
   return (
     <div className="sm:px-8 text-sm md:text-xl">
-      <div className="bg-violet-600 p-2 text-left font-semibold sticky z-30 top-0 md:static ">
+      <div className="bg-violet-600 p-2 text-left font-semibold sticky z-30 top-0 md:static">
         <button
           {...getToggleProps({
             onClick: () => setExpanded((prevExpanded) => !prevExpanded),
