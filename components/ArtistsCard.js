@@ -69,9 +69,14 @@ const ArtistsCard = ({
                       <div className=" h-full w-full relative  text-blue-300 text-2xl flex text-center justify-center align-middle content-center">
                         <p className="absolute flex flex-col h-full items-center justify-center invisible group-hover:visible text-xs px-2">
                           <>
-                            <span className="text-yellow-500">{post.artists.join(' - ')}</span>
+                            <span className="text-yellow-500">
+                              {post.artists
+                                .filter((a) => !a.includes(currentArtist))
+                                .join(' ')
+                                .replaceAll('_', ' ')}
+                            </span>
                             <span className="text-violet-500">
-                              {post.series.filter((s) => !s.includes(currentArtist)).join(' ')}
+                              {post.series.join(' ').replaceAll('_', ' ')}
                             </span>
                             <span className="text-white">
                               {post.source !== '' ? post.source : 'Source: None'}
