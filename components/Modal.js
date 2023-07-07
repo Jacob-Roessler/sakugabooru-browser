@@ -89,7 +89,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                             ></img>
                           </div>
                         ) : (
-                          <div className="relative aspect-auto w-full h-full">
+                          <div className="relative aspect-auto w-full max-h-[80vh]">
                             <ReactPlayer
                               ref={playerRef}
                               playsinline={true}
@@ -99,7 +99,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                               loop={true}
                               controls={window.screen.width >= 768 || showControls}
                               url={currentVideo.file_url}
-                              className=" object-fill"
+                              className=""
                               onPlay={handlePlay}
                             />
                           </div>
@@ -145,7 +145,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-900 flex flex-row justify-center">
+                <div className="bg-gray-900 flex flex-row justify-center overflow-hidden ">
                   <button
                     className="bg-blue-500 text-sm "
                     onClick={(e) => {

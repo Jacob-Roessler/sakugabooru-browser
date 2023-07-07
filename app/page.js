@@ -6,7 +6,7 @@ import Shows from '@/components/Shows';
 export default function Home() {
   const [viewMode, setViewMode] = useState('artists');
   return (
-    <main className="flex min-h-screen flex-col items-center pt-2 md:px-24">
+    <main className="flex min-h-screen flex-col items-center pt-2 md:px-24 overflow-hidden">
       <div className="flex flex-col justify-center items-center">
         <div className="flex flex-row gap-1">
           <button
