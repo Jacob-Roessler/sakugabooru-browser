@@ -60,7 +60,7 @@ const Shows = ({ current }) => {
           <Modal
             isOpen={videoOpen}
             setOpen={setVideoOpen}
-            currentVideo={{ ...currentVideo, series: currentShow }}
+            currentVideo={{ ...currentVideo, selected_series: currentShow }}
             goFullscreen={autoFullscreen}
             setCurrentVideo={setCurrentVideo}
           />
@@ -126,14 +126,15 @@ const Shows = ({ current }) => {
       </div>
 
       <div className="flex flex-col gap-1 mb-16">
-        {currentShowPosts.map(([series, posts_from_series], i) => (
+        {currentShowPosts.map(([artist, posts_from_artist], i) => (
           <ShowsCard
             key={i}
-            series={series}
-            posts_from_series={posts_from_series}
+            artist={artist}
+            posts_from_artist={posts_from_artist}
             setCurrentVideo={setCurrentVideo}
             setVideoOpen={setVideoOpen}
             sortByEpisode={sortByEpisode}
+            currentShow={currentShow}
           />
         ))}
       </div>

@@ -93,7 +93,7 @@ const Artists = ({ current }) => {
               <div
                 className={`${
                   artist.name === currentArtist ? 'bg-green-500' : 'bg-red-600'
-                } p-1 text-sm sm:text-base`}
+                } p-1 text-sm sm:text-base break-all sm:break-auto text-center`}
                 key={artist.id}
               >
                 <button

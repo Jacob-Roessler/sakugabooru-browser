@@ -90,21 +90,36 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
 
                       <div className="flex flex-row  justify-center items-center gap-1 sm:gap-4">
                         <span className="flex gap-2">
-                          {Array.isArray(currentVideo.series)
-                            ? currentVideo.series.map((s, index) => {
-                                return (
-                                  <Link
-                                    key={index}
-                                    href={`/shows/${s}`}
-                                    className="hover:underline text-violet-500"
-                                  >
-                                    {s.replaceAll('_', ' ')}
-                                  </Link>
-                                );
-                              })
-                            : currentVideo.series.replaceAll('_', ' ')}{' '}
-                          {currentVideo.source}
+                          {currentVideo.series.map((s, index) => {
+                            return (
+                              <Link
+                                key={index}
+                                href={`/shows/${s}`}
+                                className={`hover:underline text-violet-500 ${
+                                  currentVideo?.selected_series === s ? 'text-green-500' : ''
+                                }`}
+                              >
+                                {s.replaceAll('_', ' ')}
+                              </Link>
+                            );
+                          })}{' '}
                         </span>
+                        {currentVideo.source.includes('https') ? (
+                          <Link
+                            target="_blank"
+                            href={currentVideo.source.split('Source: ')[1]}
+                            className="text-blue-200 hover:underline"
+                          >
+                            {currentVideo.source
+                              .split('Source: ')[1]
+                              .replace(/^https?:\/\//, '')
+                              .replace(/^www\./, '')
+                              .replace(/\..*/, '')
+                              .match(/^(?:https?:\/\/)?(?:[^@/\n]+@)?(?:www\.)?([^:/?\n]+)/gim)}
+                          </Link>
+                        ) : (
+                          currentVideo.source
+                        )}
                         <span className="flex gap-1 break-all sm:break-normal sm:gap-4 justify-between">
                           {Object.hasOwn(currentVideo, 'artists') &&
                             currentVideo.artists.map((artist, index) => {

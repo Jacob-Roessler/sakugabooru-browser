@@ -1,92 +1,5 @@
 import { NextResponse } from 'next/server';
-
-const general_tags = [
-  'animated',
-  'effects',
-  'character_acting',
-  'smoke',
-  'smears',
-  'fighting',
-  'creatures',
-  'liquid',
-  'debris',
-  'explosions',
-  'hair',
-  'production_materials',
-  'western',
-  'fabric',
-  'running',
-  'background_animation',
-  'mecha',
-  'fire',
-  'animals',
-  'sparks',
-  'genga',
-  'impact_frames',
-  'lightning',
-  'cgi',
-  'beams',
-  'vehicle',
-  'wind',
-  'performance',
-  'rotation',
-  'sports',
-  'walk_cycle',
-  'web',
-  'dancing',
-  'morphing',
-  'flying',
-  'falling',
-  '3d_background',
-  'eastern',
-  'layout',
-  'crowd',
-  'missiles',
-  'settei',
-  'food',
-  'crying',
-  'storyboard',
-  'henshin',
-  'character_design',
-  'ice',
-  'black_and_white',
-  'correction',
-  'illustration',
-  'rotoscope',
-  'genga_comparison',
-  'instruments',
-  'henkei',
-  'gattai',
-  'live_action',
-  'title_animation',
-  'douga',
-  'background_design',
-  'concept_art',
-  'timesheet',
-  'sprite',
-  'mechanical_design',
-  'screencap',
-  'comparison',
-  'flipbook',
-  'rough',
-  'thumbs_up',
-  'stop_motion',
-  'tagme',
-  'merry_christmas',
-  'artist_unknown',
-  'presumed',
-  'remake',
-  'umakoshi_eye',
-  'kutsuna_lightning',
-  'ebata_walk',
-  'hisashi_punch',
-  'wakame_shadows',
-  'kanada_dragon',
-  'kanada_light_flare',
-  'obari_punch',
-  'yutapon_cubes',
-  'itano_circus',
-];
+import cleanData from '@/helpers/cleanData';
 
 export async function GET(req, { params }) {
   console.log(params);
@@ -108,21 +21,8 @@ export async function GET(req, { params }) {
 
   const tagresponse = await fetch('https://www.sakugabooru.com/tag.json?type=1&limit=0');
   let tagdata = await tagresponse.json();
-  let artistsTags = {};
-  let generalTags = {};
 
-  tagdata.forEach((tagObj) => {
-    artistsTags[tagObj.name] = 'artist';
-  });
-
-  general_tags.forEach((tag) => {
-    generalTags[tag] = 'general';
-  });
-
-  data = data.map((post) => ({
-    ...post,
-    series: post.tags.split(' ').filter((tag) => !(tag in generalTags) && !(tag in artistsTags)),
-  }));
+  data = cleanData(data, tagdata);
 
   let group_by_series = {};
   data.forEach((post) => {
