@@ -56,12 +56,16 @@ const ShowsCard = ({
                     }}
                   >
                     <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center ">
-                      <p className="absolute flex h-full items-center invisible group-hover:visible break-all">
-                        {sortByEpisode
-                          ? `${post.artists.join(' ')} ${
-                              post.source.includes('Source') ? post.source : ''
-                            }`
-                          : `${post.source.trim() === 'Source:' ? 'Source: None' : post.source}`}
+                      <p className="absolute flex flex-col h-full items-center justify-center invisible group-hover:visible break-all text-xs">
+                        <>
+                          <span className="text-yellow-500">{post.artists.join(' - ')}</span>
+                          <span className="text-violet-500">
+                            {post.series.filter((s) => !s.includes(currentShow)).join(' ')}
+                          </span>{' '}
+                          <span className="text-white">
+                            {post.source.includes('Source') ? post.source : ''}
+                          </span>
+                        </>
                       </p>
                       <img className="group-hover:opacity-20" src={post.preview_url}></img>
                     </div>

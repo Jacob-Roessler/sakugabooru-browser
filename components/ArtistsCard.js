@@ -3,7 +3,13 @@ import { useCollapse } from 'react-collapsed';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import Link from 'next/link';
 
-const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo }) => {
+const ArtistsCard = ({
+  series,
+  posts_from_series,
+  setVideoOpen,
+  setCurrentVideo,
+  currentArtist,
+}) => {
   const [isExpanded, setExpanded] = useState(true);
   const { getCollapseProps, getToggleProps } = useCollapse({ isExpanded });
 
@@ -61,8 +67,16 @@ const ArtistsCard = ({ series, posts_from_series, setVideoOpen, setCurrentVideo 
                       }}
                     >
                       <div className=" h-full w-full relative  text-blue-300 text-2xl flex text-center justify-center align-middle content-center break-all">
-                        <p className="absolute flex h-full items-center invisible group-hover:visible ">
-                          {post.source === '' ? 'No Source' : `Source: ${post.source}`}
+                        <p className="absolute flex flex-col h-full items-center justify-center invisible group-hover:visible break-all text-xs">
+                          <>
+                            <span className="text-yellow-500">{post.artists.join(' - ')}</span>
+                            <span className="text-violet-500">
+                              {post.series.filter((s) => !s.includes(currentArtist)).join(' ')}
+                            </span>{' '}
+                            <span className="text-white">
+                              {post.source.includes('Source') ? post.source : ''}
+                            </span>
+                          </>
                         </p>
                         <img className="group-hover:opacity-20" src={post.preview_url}></img>
                       </div>

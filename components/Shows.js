@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Modal from './Modal';
 import ShowsCard from './ShowsCard';
 import Pagination from './Pagination';
@@ -52,6 +52,33 @@ const Shows = ({ current }) => {
         });
     }
   }, [currentShow, sortByEpisode]);
+
+  // handle what happens on key press
+  const handleKeyPress = useCallback(
+    (event) => {
+      if (event.key.toLowerCase() === 'f') {
+        setAutoFullscreen(!autoFullscreen);
+      } else if (event.key === 'ArrowLeft') {
+        setShowsOffset(Math.max(0, showsOffset - pagination));
+      } else if (event.key === 'ArrowRight') {
+        setShowsOffset(showsOffset + pagination);
+      } else if (event.key.toLowerCase() === 's') {
+        setSortByEpisode(!sortByEpisode);
+      }
+      console.log(`Key pressed: ${event.key}`);
+    },
+    [autoFullscreen, showsOffset, sortByEpisode]
+  );
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener('keydown', handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   return (
     <div className="">

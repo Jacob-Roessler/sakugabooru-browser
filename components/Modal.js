@@ -88,14 +88,14 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                         )}
                       </div>
 
-                      <div className="flex flex-row  justify-center items-center gap-1 sm:gap-4">
-                        <span className="flex gap-2">
+                      <div className="flex flex-row  justify-center  gap-1 sm:gap-4 px-2 sm:px-12 sm:py-2">
+                        <span className="flex sm:flex-col justify-end flex-wrap basis-1/2 text-end">
                           {currentVideo.series.map((s, index) => {
                             return (
                               <Link
                                 key={index}
                                 href={`/shows/${s}`}
-                                className={`hover:underline text-violet-500 ${
+                                className={`sm:basis-1 hover:underline  text-violet-500 ${
                                   currentVideo?.selected_series === s ? 'text-green-500' : ''
                                 }`}
                               >
@@ -104,7 +104,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                             );
                           })}{' '}
                         </span>
-                        {currentVideo.source.includes('https') ? (
+                        {currentVideo.source.includes('http') ? (
                           <Link
                             target="_blank"
                             href={currentVideo.source.split('Source: ')[1]}
@@ -114,33 +114,29 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                               .split('Source: ')[1]
                               .replace(/^https?:\/\//, '')
                               .replace(/^www\./, '')
-                              .replace(/\..*/, '')
-                              .match(/^(?:https?:\/\/)?(?:[^@/\n]+@)?(?:www\.)?([^:/?\n]+)/gim)}
+                              .replace(/\..*/, '')}
                           </Link>
                         ) : (
                           currentVideo.source
                         )}
-                        <span className="flex gap-1 break-all sm:break-normal sm:gap-4 justify-between">
+                        <span
+                          className={`flex flex-wrap break-all sm:break-normal gap-1 sm:gap-2 justify-start basis-1/2 ${
+                            currentVideo.artists.length > 3 ? 'text-xs' : ''
+                          }`}
+                        >
                           {Object.hasOwn(currentVideo, 'artists') &&
                             currentVideo.artists.map((artist, index) => {
                               return (
                                 <Link
                                   key={index}
                                   href={`/artists/${artist}`}
-                                  className="hover:underline text-yellow-500"
+                                  className="hover:underline text-yellow-500 odd:text-yellow-400"
                                 >
                                   {artist.replaceAll('_', ' ')}
                                 </Link>
                               );
                             })}
                         </span>
-                        <Link
-                          target="_blank"
-                          href={`https://www.sakugabooru.com/post/show/${currentVideo.id}`}
-                          className="hover:underline text-blue-300"
-                        >
-                          booru page
-                        </Link>
                       </div>
                     </div>
                   </div>
@@ -154,6 +150,13 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                   >
                     Copy to clipboard
                   </button>
+                  <Link
+                    className="bg-blue-500 text-sm flex items-center"
+                    href={`https://www.sakugabooru.com/post/show/${currentVideo.id}`}
+                    target="_blank"
+                  >
+                    Booru Page
+                  </Link>
                   <button
                     className="bg-blue-500 text-sm sm:invisible"
                     onClick={(e) => {
@@ -162,6 +165,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                   >
                     {`${showControls ? 'Hide' : 'Show'}`} Controls
                   </button>
+
                   <div className="basis-[100%] flex justify-end">
                     <button
                       type="button"

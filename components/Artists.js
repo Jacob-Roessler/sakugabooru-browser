@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Modal from './Modal';
 import ArtistsCard from './ArtistsCard';
 import Pagination from './Pagination';
@@ -41,6 +41,31 @@ const Artists = ({ current }) => {
         console.log(data.data);
       });
   }, [currentArtist]);
+
+  // handle what happens on key press
+  const handleKeyPress = useCallback(
+    (event) => {
+      if (event.key.toLowerCase() === 'f') {
+        setAutoFullscreen(!autoFullscreen);
+      } else if (event.key === 'ArrowLeft') {
+        setArtistsOffset(Math.max(0, artistsOffset - pagination));
+      } else if (event.key === 'ArrowRight') {
+        setArtistsOffset(artistsOffset + pagination);
+      }
+      console.log(`Key pressed: ${event.key}`);
+    },
+    [autoFullscreen, artistsOffset]
+  );
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener('keydown', handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   return (
     <div className="">
@@ -116,6 +141,7 @@ const Artists = ({ current }) => {
             key={i}
             series={series}
             posts_from_series={posts_from_series}
+            currentArtist={currentArtist}
           />
         ))}
       </div>
