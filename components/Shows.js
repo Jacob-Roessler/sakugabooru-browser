@@ -62,7 +62,7 @@ const Shows = ({ current }) => {
         setShowsOffset(Math.max(0, showsOffset - pagination));
       } else if (event.key === 'ArrowRight') {
         setShowsOffset(showsOffset + pagination);
-      } else if (event.key.toLowerCase() === 's') {
+      } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
         setSortByEpisode(!sortByEpisode);
       }
       console.log(`Key pressed: ${event.key}`);
