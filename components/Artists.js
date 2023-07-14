@@ -105,7 +105,7 @@ const Artists = ({ current }) => {
             return (
               <div
                 className={`${
-                  artist.name === currentArtist ? 'bg-green-500' : 'bg-red-600'
+                  artist.name === currentArtist.replaceAll(' ', '_') ? 'bg-green-500' : 'bg-red-600'
                 } p-1 text-sm sm:text-base break-all sm:break-auto text-center`}
                 key={artist.id}
               >
