@@ -133,6 +133,8 @@ const Shows = ({ current }) => {
               <button
                 onClick={(e) => {
                   setCurrentShow(show.name);
+                  const newUrl = `/shows/${encodeURIComponent(show.name)}`;
+                  history.pushState({}, '', newUrl);
                 }}
               >
                 {show.name.replaceAll('_', ' ')}

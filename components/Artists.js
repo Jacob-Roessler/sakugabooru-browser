@@ -112,6 +112,8 @@ const Artists = ({ current }) => {
                 <button
                   onClick={(e) => {
                     setCurrentArtist(artist.name);
+                    const newUrl = `/artists/${artist.name}`;
+                    history.pushState({}, '', newUrl);
                   }}
                 >
                   {artist.name.replaceAll('_', ' ')}
