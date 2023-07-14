@@ -34,7 +34,7 @@ export default function Page({ params }) {
       {viewMode === 'artists' ? (
         <Artists />
       ) : (
-        <Shows current={params.name.toLowerCase().replaceAll('%20', '_')} />
+        <Shows current={decodeURIComponent(params.name).toLowerCase()} />
       )}
     </main>
   );

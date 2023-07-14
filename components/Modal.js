@@ -112,7 +112,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                             return (
                               <Link
                                 key={index}
-                                href={`/shows/${s.replaceAll('/', '$')}`}
+                                href={`/shows/${encodeURIComponent(s)}`}
                                 className={`hover:underline  text-violet-500 ${
                                   currentVideo?.selected_series === s ? 'text-green-500' : ''
                                 }`}

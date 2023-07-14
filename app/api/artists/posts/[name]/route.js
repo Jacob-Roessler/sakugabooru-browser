@@ -3,7 +3,7 @@ import cleanData from '@/helpers/cleanData';
 
 export async function GET(req, { params }) {
   console.log(params);
-  const name = params.name;
+  const name = encodeURIComponent(params.name);
   const response = await fetch(`https://www.sakugabooru.com/post.json?limit=1000&tags=${name}`);
   let data = await response.json();
 

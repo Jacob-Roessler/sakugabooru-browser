@@ -42,14 +42,14 @@ const Shows = ({ current }) => {
     setCurrentShowPosts([]);
 
     if (sortByEpisode) {
-      fetch(`/api/shows/posts/${currentShow}/sortEpisodes`)
+      fetch(`/api/shows/posts/${encodeURIComponent(currentShow)}/sortEpisodes`)
         .then((res) => res.json())
         .then((data) => {
           setCurrentShowPosts(data.data);
           setLoading(false);
         });
     } else {
-      fetch(`/api/shows/posts/${currentShow}`)
+      fetch(`/api/shows/posts/${encodeURIComponent(currentShow)}`)
         .then((res) => res.json())
         .then((data) => {
           setCurrentShowPosts(data.data);
@@ -127,12 +127,12 @@ const Shows = ({ current }) => {
             <div
               key={index}
               className={` ${
-                show.name === currentShow.replaceAll('$', '/') ? 'bg-green-500' : 'bg-violet-500'
+                show.name === currentShow ? 'bg-green-500' : 'bg-violet-500'
               } p-1 text-sm sm:text-base `}
             >
               <button
                 onClick={(e) => {
-                  setCurrentShow(show.name.replaceAll('/', '$'));
+                  setCurrentShow(show.name);
                 }}
               >
                 {show.name.replaceAll('_', ' ')}

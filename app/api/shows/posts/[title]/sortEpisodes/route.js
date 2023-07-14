@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import cleanData from '@/helpers/cleanData';
 
 export async function GET(req, { params }) {
-  const title = params.title.replaceAll('$', '/');
+  const title = encodeURIComponent(params.title).replaceAll('%20', '_');
 
   const response = await fetch(`https://www.sakugabooru.com/post.json?limit=1000&tags=${title}`);
   let data = await response.json();
