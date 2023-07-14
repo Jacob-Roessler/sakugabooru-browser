@@ -5,12 +5,14 @@ import Modal from './Modal';
 import ArtistsCard from './ArtistsCard';
 import Pagination from './Pagination';
 import UseKeyboardShortcuts from './UseKeyboardShortcuts';
+import ReactLoading from 'react-loading';
 
 const pagination = 50;
 
 const Artists = ({ current }) => {
   const [artists, setArtists] = useState([]);
   const [artistsOffset, setArtistsOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const [searchArtists, setSearchArtists] = useState(current ? current : '');
   const [currentArtist, setCurrentArtist] = useState(current ? current : '');
@@ -34,12 +36,13 @@ const Artists = ({ current }) => {
       return;
     }
     console.log(`get ${currentArtist}'s posts api called`);
+    setLoading(true);
     setCurrentArtistPosts([]);
     fetch(`/api/artists/posts/${currentArtist}`)
       .then((res) => res.json())
       .then((data) => {
         setCurrentArtistPosts(data.data);
-        console.log(data.data);
+        setLoading(false);
       });
   }, [currentArtist]);
 
@@ -119,16 +122,22 @@ const Artists = ({ current }) => {
       </div>
 
       <div className="flex flex-col gap-1 mb-16">
-        {currentArtistPosts.map(([series, posts_from_series], i) => (
-          <ArtistsCard
-            setVideoOpen={setVideoOpen}
-            setCurrentVideo={setCurrentVideo}
-            key={i}
-            series={series}
-            posts_from_series={posts_from_series}
-            currentArtist={currentArtist}
-          />
-        ))}
+        {loading ? (
+          <div className="flex justify-center">
+            <ReactLoading type="bars" color="#7C3AED" width={200} height={100} />
+          </div>
+        ) : (
+          currentArtistPosts.map(([series, posts_from_series], i) => (
+            <ArtistsCard
+              setVideoOpen={setVideoOpen}
+              setCurrentVideo={setCurrentVideo}
+              key={i}
+              series={series}
+              posts_from_series={posts_from_series}
+              currentArtist={currentArtist}
+            />
+          ))
+        )}
       </div>
     </div>
   );

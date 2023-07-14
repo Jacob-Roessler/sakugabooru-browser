@@ -5,12 +5,14 @@ import Modal from './Modal';
 import ShowsCard from './ShowsCard';
 import Pagination from './Pagination';
 import UseKeyboardShortcuts from './UseKeyboardShortcuts';
+import ReactLoading from 'react-loading';
 
 const pagination = 50;
 
 const Shows = ({ current }) => {
   const [shows, setShows] = useState([]);
   const [showsOffset, setShowsOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const [searchShows, setSearchShows] = useState(current ? current : '');
   const [currentShow, setCurrentShow] = useState(current ? current : '');
@@ -36,20 +38,22 @@ const Shows = ({ current }) => {
       return;
     }
     console.log(`get ${currentShow}'s posts api called`);
+    setLoading(true);
     setCurrentShowPosts([]);
+
     if (sortByEpisode) {
       fetch(`/api/shows/posts/${currentShow}/sortEpisodes`)
         .then((res) => res.json())
         .then((data) => {
           setCurrentShowPosts(data.data);
-          console.log(data.data);
+          setLoading(false);
         });
     } else {
       fetch(`/api/shows/posts/${currentShow}`)
         .then((res) => res.json())
         .then((data) => {
           setCurrentShowPosts(data.data);
-          console.log(data.data);
+          setLoading(false);
         });
     }
   }, [currentShow, sortByEpisode]);
@@ -138,17 +142,23 @@ const Shows = ({ current }) => {
       </div>
 
       <div className="flex flex-col gap-1 mb-16">
-        {currentShowPosts.map(([artist, posts_from_artist], i) => (
-          <ShowsCard
-            key={i}
-            artist={artist}
-            posts_from_artist={posts_from_artist}
-            setCurrentVideo={setCurrentVideo}
-            setVideoOpen={setVideoOpen}
-            sortByEpisode={sortByEpisode}
-            currentShow={currentShow}
-          />
-        ))}
+        {loading ? (
+          <div className="flex justify-center">
+            <ReactLoading type="bars" color="#EAB308" width={200} height={100} />
+          </div>
+        ) : (
+          currentShowPosts.map(([artist, posts_from_artist], i) => (
+            <ShowsCard
+              key={i}
+              artist={artist}
+              posts_from_artist={posts_from_artist}
+              setCurrentVideo={setCurrentVideo}
+              setVideoOpen={setVideoOpen}
+              sortByEpisode={sortByEpisode}
+              currentShow={currentShow}
+            />
+          ))
+        )}
       </div>
     </div>
   );
