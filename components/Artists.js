@@ -38,7 +38,7 @@ const Artists = ({ current }) => {
     console.log(`get ${currentArtist}'s posts api called`);
     setLoading(true);
     setCurrentArtistPosts([]);
-    fetch(`/api/artists/posts/${currentArtist}`)
+    fetch(`/api/artists/posts/${encodeURIComponent(currentArtist)}`)
       .then((res) => res.json())
       .then((data) => {
         setCurrentArtistPosts(data.data);
