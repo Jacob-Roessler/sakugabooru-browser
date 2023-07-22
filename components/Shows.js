@@ -7,10 +7,9 @@ import Pagination from './Pagination';
 import UseKeyboardShortcuts from './UseKeyboardShortcuts';
 import ReactLoading from 'react-loading';
 
-const pagination = 50;
-
 const Shows = ({ current }) => {
   const [shows, setShows] = useState([]);
+  const [pagination, setPagination] = useState(50);
   const [showsOffset, setShowsOffset] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -96,6 +95,7 @@ const Shows = ({ current }) => {
           setOffset={setShowsOffset}
           list={shows}
           pagination={pagination}
+          setPagination={setPagination}
           placeholder="Series"
         />
 
@@ -119,16 +119,16 @@ const Shows = ({ current }) => {
         </button>
       </div>
 
-      <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">
+      <div className="flex flex-row  flex-wrap gap-1 justify-center mb-1">
         {shows
           .filter((s) => s.name.includes(searchShows.toLowerCase().replaceAll(' ', '_')))
           .slice(showsOffset, showsOffset + pagination)
           .map((show, index) => (
             <div
               key={index}
-              className={` ${
+              className={`rounded ${
                 show.name === currentShow.replaceAll(' ', '_') ? 'bg-green-500' : 'bg-violet-500'
-              } p-1 text-sm sm:text-base `}
+              } p-1 text-sm sm:text-base  hover:bg-green-500`}
             >
               <button
                 onClick={(e) => {

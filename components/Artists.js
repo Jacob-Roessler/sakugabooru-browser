@@ -7,10 +7,9 @@ import Pagination from './Pagination';
 import UseKeyboardShortcuts from './UseKeyboardShortcuts';
 import ReactLoading from 'react-loading';
 
-const pagination = 50;
-
 const Artists = ({ current }) => {
   const [artists, setArtists] = useState([]);
+  const [pagination, setPagination] = useState(50);
   const [artistsOffset, setArtistsOffset] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -92,6 +91,7 @@ const Artists = ({ current }) => {
         setOffset={setArtistsOffset}
         list={artists}
         pagination={pagination}
+        setPagination={setPagination}
         placeholder="Artists"
       />
 
@@ -104,9 +104,9 @@ const Artists = ({ current }) => {
           .map((artist, index) => {
             return (
               <div
-                className={`${
+                className={`rounded ${
                   artist.name === currentArtist.replaceAll(' ', '_') ? 'bg-green-500' : 'bg-red-600'
-                } p-1 text-sm sm:text-base break-all sm:break-auto text-center`}
+                } p-1 text-sm sm:text-base break-all sm:break-auto text-center hover:bg-green-500`}
                 key={artist.id}
               >
                 <button

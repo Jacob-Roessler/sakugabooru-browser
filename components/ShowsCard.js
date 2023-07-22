@@ -57,7 +57,7 @@ const ShowsCard = ({
                       setCurrentVideo({ ...post, other_posts: posts_from_artist, index: index });
                     }}
                   >
-                    <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center ">
+                    <div className=" h-full w-full relative inline text-blue-300 text-2xl flex text-center justify-center align-middle content-center">
                       <p className="absolute flex flex-col h-full items-center justify-center invisible group-hover:visible text-xs px-2">
                         <>
                           <span className="text-yellow-500">

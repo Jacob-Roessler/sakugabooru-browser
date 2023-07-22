@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="text-xl sm:text-3xl mb-2 text-center my-12">
+        <div className="text-xl sm:text-3xl pb-2 text-center py-12">
           <Link href="/">Booru Browser</Link>
         </div>
 

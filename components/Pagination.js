@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 import { RxCross2 } from 'react-icons/rx';
+import debounce from 'lodash.debounce';
 
 const Pagination = ({
   searchTerm,
@@ -8,8 +10,11 @@ const Pagination = ({
   setOffset,
   list,
   pagination,
+  setPagination,
   placeholder,
 }) => {
+  const [sliderValue, setSliderValue] = useState(0);
+
   let end;
   if (searchTerm === '') {
     end = list.length;
@@ -18,36 +23,14 @@ const Pagination = ({
       return artist.name.includes(searchTerm.toLowerCase().replace(' ', '_'));
     }).length;
   }
-
-  let reachedEnd = end - pagination > offset;
+  let setOffsetDebounced = debounce(setOffset, 50);
 
   return (
-    <div className="flex flex-row content-center justify-center mb-2">
-      <button
-        className={`bg-slate-800 px-2  ${
-          offset === 0 ? 'bg-black text-black cursor-default' : 'hover:scale-105'
-        }`}
-        onClick={(e) => {
-          setOffset(0);
-        }}
-      >
-        <RiArrowLeftSLine />
-        <RiArrowLeftSLine />
-      </button>
-      <button
-        className={`bg-slate-800 px-2  ${
-          offset === 0 ? 'bg-black text-black  cursor-default' : 'hover:scale-105'
-        }`}
-        onClick={(e) => {
-          setOffset(Math.max(0, offset - pagination));
-        }}
-      >
-        <RiArrowLeftSLine />
-      </button>
+    <div className="flex flex-row flex-wrap content-center justify-center mb-2">
       <input
         type="text"
         placeholder={`Search ${placeholder}...`}
-        className="text-black py-2 text-center focus:outline-none focus:shadow-md focus:shadow-gray-500 text-[16px]"
+        className="input text-[16px]"
         onChange={(e) => {
           setOffset(0);
           setSearchTerm(e.target.value);
@@ -55,7 +38,7 @@ const Pagination = ({
         value={searchTerm ? searchTerm : ''}
       ></input>
       <button
-        className={`text-black bg-white z-10 relative ${searchTerm ? 'visible' : 'invisible'}`}
+        className={`text-white z-10 relative ${searchTerm ? 'visible' : 'invisible'}`}
         onClick={(e) => {
           if (searchTerm) {
             setOffset(0);
@@ -63,29 +46,41 @@ const Pagination = ({
           setSearchTerm('');
         }}
       >
-        <RxCross2 className="absolute right-2 -translate-y-1/2 bg-white scale-125 hover:scale-150" />
+        <RxCross2 className="absolute right-2 -translate-y-1/2  scale-125 hover:scale-150" />
       </button>
-      <button
-        className={`bg-slate-800 px-2 ${
-          reachedEnd ? 'hover:scale-105' : 'bg-black text-black  cursor-default'
-        }`}
-        onClick={(e) => {
-          setOffset(Math.min(end - pagination, offset + pagination));
+      <input
+        min={0}
+        max={200}
+        type="number"
+        className="input w-[80px] ml-1"
+        defaultValue={pagination}
+        onChange={(e) => {
+          setPagination(parseInt(e.target.value ? Math.min(e.target.value, 200) : 50));
         }}
-      >
-        <RiArrowRightSLine />
-      </button>
-      <button
-        className={`bg-slate-800 px-2  ${
-          reachedEnd ? 'hover:scale-105' : 'bg-black text-black  cursor-default'
-        }`}
-        onClick={(e) => {
-          setOffset(end - pagination);
-        }}
-      >
-        <RiArrowRightSLine />
-        <RiArrowRightSLine />
-      </button>
+      ></input>
+
+      <div className="basis-full text-center ">
+        <input
+          type="range"
+          min={0}
+          max={end - (end % pagination)}
+          value={offset}
+          disabled={pagination >= end}
+          className={`range max-w-sm mt-2
+          ${placeholder === 'Artists' ? 'range-warning' : 'range-primary'}
+          ${pagination >= end && 'opacity-0 cursor-default'}
+          `}
+          step={pagination}
+          onChange={(e) => {
+            setSliderValue(e.target.value);
+            setOffsetDebounced(parseInt(e.target.value));
+          }}
+        />
+      </div>
+
+      <p className={`${pagination >= end ? 'invisible' : 'visible'}`}>
+        {offset}-{offset + pagination > end ? end : offset + pagination}/{end}
+      </p>
     </div>
   );
 };
