@@ -48,16 +48,20 @@ const Pagination = ({
       >
         <RxCross2 className="absolute right-2 -translate-y-1/2  scale-125 hover:scale-150" />
       </button>
-      <input
-        min={0}
-        max={200}
-        type="number"
+      <select
         className="input w-[80px] ml-1"
-        defaultValue={pagination}
+        value={pagination}
         onChange={(e) => {
           setPagination(parseInt(e.target.value ? Math.min(e.target.value, 200) : 50));
         }}
-      ></input>
+      >
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="75">75</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+      </select>
 
       <div className="basis-full text-center ">
         <input
