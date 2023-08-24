@@ -4,7 +4,9 @@ import cleanData from '@/helpers/cleanData';
 export async function GET(req, { params }) {
   const title = encodeURIComponent(params.title).replaceAll('%20', '_');
 
-  const response = await fetch(`https://www.sakugabooru.com/post.json?limit=1000&tags=${title}`);
+  const response = await fetch(`https://www.sakugabooru.com/post.json?limit=1000&tags=${title}`, {
+    next: { revalidate: 259200 },
+  });
   let data = await response.json();
 
   if (data.length === 0) {
@@ -13,7 +15,8 @@ export async function GET(req, { params }) {
 
   if (data.length === 1000) {
     const response2 = await fetch(
-      `https://www.sakugabooru.com/post.json?limit=1000&tags=${title}&page=2`
+      `https://www.sakugabooru.com/post.json?limit=1000&tags=${title}&page=2`,
+      { next: { revalidate: 259200 } }
     );
     let data2 = await response2.json();
     data = [...data, ...data2];

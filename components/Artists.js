@@ -9,6 +9,7 @@ import ReactLoading from 'react-loading';
 
 const Artists = ({ current }) => {
   const [artists, setArtists] = useState([]);
+  const [sortArtists, setSortArtists] = useState(false);
   const [pagination, setPagination] = useState(50);
   const [artistsOffset, setArtistsOffset] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -23,12 +24,12 @@ const Artists = ({ current }) => {
 
   useEffect(() => {
     console.log('get first page of artists api called');
-    fetch('/api/artists')
+    fetch(`/api/artists?sort=${sortArtists}`)
       .then((res) => res.json())
       .then((data) => {
         setArtists(data.data);
       });
-  }, []);
+  }, [sortArtists]);
 
   useEffect(() => {
     if (currentArtist === '') {
@@ -47,7 +48,7 @@ const Artists = ({ current }) => {
 
   return (
     <div className="">
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800 hover:underline z-50 invisible sm:visible">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-base-100 hover:underline z-50 invisible sm:visible">
         <UseKeyboardShortcuts
           setAutoFullscreen={setAutoFullscreen}
           autoFullscreen={autoFullscreen}
@@ -94,6 +95,12 @@ const Artists = ({ current }) => {
         setPagination={setPagination}
         placeholder="Artists"
       />
+      <button
+        className={`w-full ${artists.length === 0 ? 'invisible' : 'visible'}`}
+        onClick={() => setSortArtists(!sortArtists)}
+      >
+        Sorting By {sortArtists ? 'Count' : 'Name'}
+      </button>
 
       <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">
         {artists
@@ -116,7 +123,10 @@ const Artists = ({ current }) => {
                     history.pushState({}, '', newUrl);
                   }}
                 >
-                  {artist.name.replaceAll('_', ' ')}
+                  <span
+                    className="lg:tooltip"
+                    data-tip={`${artist.count} Posts`}
+                  >{`${artist.name.replaceAll('_', ' ')}`}</span>
                 </button>
               </div>
             );

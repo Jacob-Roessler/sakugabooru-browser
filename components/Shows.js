@@ -9,6 +9,7 @@ import ReactLoading from 'react-loading';
 
 const Shows = ({ current }) => {
   const [shows, setShows] = useState([]);
+  const [sortShows, setSortShows] = useState(false);
   const [pagination, setPagination] = useState(50);
   const [showsOffset, setShowsOffset] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -25,12 +26,12 @@ const Shows = ({ current }) => {
 
   useEffect(() => {
     console.log('get all shows api called');
-    fetch('/api/shows')
+    fetch(`/api/shows?sort=${sortShows}`)
       .then((res) => res.json())
       .then((data) => {
         setShows(data.data);
       });
-  }, []);
+  }, [sortShows]);
 
   useEffect(() => {
     if (currentShow === '') {
@@ -87,7 +88,7 @@ const Shows = ({ current }) => {
           }}
         ></button>
       </div>
-      <div className="flex flex-row items-center justify-center text-sm sm:text-base mb-2">
+      <div>
         <Pagination
           setSearchTerm={setSearchShows}
           searchTerm={searchShows}
@@ -99,7 +100,11 @@ const Shows = ({ current }) => {
           placeholder="Series"
         />
 
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-slate-800 z-50 invisible sm:visible">
+        <button className="text-center w-full pb-1" onClick={() => setSortShows(!sortShows)}>
+          Sorting By {sortShows ? 'Count' : 'Name'}
+        </button>
+
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-base-100 z-50 invisible sm:visible">
           <button
             className="hover:underline "
             onClick={() => {
@@ -110,7 +115,7 @@ const Shows = ({ current }) => {
           </button>
         </div>
         <button
-          className="fixed bottom-0 right-0 p-4 bg-slate-800 z-50 hover:scale-105"
+          className="fixed bottom-0 right-0 p-4 bg-base-100 z-50 hover:scale-105"
           onClick={(e) => {
             setSortByEpisode(!sortByEpisode);
           }}
@@ -137,7 +142,10 @@ const Shows = ({ current }) => {
                   history.pushState({}, '', newUrl);
                 }}
               >
-                {show.name.replaceAll('_', ' ')}
+                <span
+                  className="lg:tooltip"
+                  data-tip={`${show.count} Posts`}
+                >{`${show.name.replaceAll('_', ' ')}`}</span>
               </button>
             </div>
           ))}

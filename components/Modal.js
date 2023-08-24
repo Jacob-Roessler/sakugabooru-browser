@@ -41,7 +41,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-base-300 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto text-xs md:text-base">
@@ -55,8 +55,8 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-900 shadow-xl transition-all sm:w-full sm:max-w-screen max-w-7xl">
-                <div className="bg-gray-900">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-base-300 shadow-xl transition-all sm:w-full sm:max-w-screen max-w-7xl">
+                <div className="bg-base-300">
                   <div className="">
                     <div className="">
                       <Dialog.Title
@@ -145,7 +145,7 @@ export default function Modal({ isOpen, setOpen, currentVideo, goFullscreen, set
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-900 flex flex-row justify-center overflow-hidden ">
+                <div className="flex flex-row justify-center overflow-hidden ">
                   <button
                     className="bg-blue-500 text-sm "
                     onClick={(e) => {

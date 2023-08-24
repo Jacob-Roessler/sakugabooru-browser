@@ -14,8 +14,8 @@ const Pagination = ({
   placeholder,
 }) => {
   const [sliderValue, setSliderValue] = useState(0);
-
   let end;
+
   if (searchTerm === '') {
     end = list.length;
   } else {
@@ -63,7 +63,10 @@ const Pagination = ({
         <option value="200">200</option>
       </select>
 
-      <div className="basis-full text-center ">
+      <div className={`basis-full text-center ${pagination >= end && 'invisible'} `}>
+        <button onClick={() => setOffset(Math.max(0, offset - pagination))}>
+          <RiArrowLeftSLine className="relative -translate-y-1" />
+        </button>
         <input
           type="range"
           min={0}
@@ -72,7 +75,7 @@ const Pagination = ({
           disabled={pagination >= end}
           className={`range max-w-sm mt-2
           ${placeholder === 'Artists' ? 'range-warning' : 'range-primary'}
-          ${pagination >= end && 'opacity-0 cursor-default'}
+          
           `}
           step={pagination}
           onChange={(e) => {
@@ -80,11 +83,21 @@ const Pagination = ({
             setOffsetDebounced(parseInt(e.target.value));
           }}
         />
+        <button
+          onClick={() =>
+            setOffset(offset + pagination <= end ? offset + pagination : end - (end % pagination))
+          }
+        >
+          <RiArrowRightSLine className="relative -translate-y-1" />
+        </button>
       </div>
-
-      <p className={`${pagination >= end ? 'invisible' : 'visible'}`}>
-        {offset}-{offset + pagination > end ? end : offset + pagination}/{end}
-      </p>
+      {end <= 0 ? (
+        <p className="">No Results Found</p>
+      ) : (
+        <p>
+          {offset}-{offset + pagination > end ? end : offset + pagination} of {end}
+        </p>
+      )}
     </div>
   );
 };

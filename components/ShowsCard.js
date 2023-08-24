@@ -43,7 +43,7 @@ const ShowsCard = ({
       </div>
 
       <section {...getCollapseProps()}>
-        <div className="bg-gray-900">
+        <div className="bg-base-100">
           <div className="flex flex-row flex-wrap justify-center items-center">
             {posts_from_artist.map((post, index) => {
               return (
