@@ -34,12 +34,12 @@ const ArtistsCard = ({
                   <Link
                     key={s + index}
                     href={`/shows/${s.replaceAll('/', '$')}`}
-                    className="hover:underline z-50 w-fit"
+                    className="hover:underline z-50 w-fit bg-violet-900 px-1 rounded-md"
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
                   >
-                    {series === 'undefined' ? 'Other' : s.replaceAll('_', ' ')}
+                    {series === '' ? 'Non-copyright Source' : s.replaceAll('_', ' ')}
                   </Link>
                 </>
               );

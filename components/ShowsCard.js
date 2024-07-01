@@ -31,7 +31,7 @@ const ShowsCard = ({
           <span className="flex flex-row  justify-center">
             <Link
               href={!sortByEpisode ? `/artists/${artist}` : ''}
-              className={`${!sortByEpisode && 'hover:underline'} z-50`}
+              className={`${!sortByEpisode && 'hover:underline'} z-50 bg-slate-900 px-1 rounded-md`}
               onClick={(e) => {
                 e.stopPropagation();
               }}

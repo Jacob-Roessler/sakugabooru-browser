@@ -85,22 +85,24 @@ const Artists = ({ current }) => {
         ></button>
       </div>
 
-      <Pagination
-        setSearchTerm={setSearchArtists}
-        searchTerm={searchArtists}
-        offset={artistsOffset}
-        setOffset={setArtistsOffset}
-        list={artists}
-        pagination={pagination}
-        setPagination={setPagination}
-        placeholder="Artists"
-      />
-      <button
-        className={`w-full ${artists.length === 0 ? 'invisible' : 'visible'}`}
-        onClick={() => setSortArtists(!sortArtists)}
-      >
-        Sorting By {sortArtists ? 'Count' : 'Name'}
-      </button>
+      {artists.length > 0 && (
+        <Pagination
+          setSearchTerm={setSearchArtists}
+          searchTerm={searchArtists}
+          offset={artistsOffset}
+          setOffset={setArtistsOffset}
+          list={artists}
+          pagination={pagination}
+          setPagination={setPagination}
+          placeholder="Artists"
+        />
+      )}
+
+      <div className={`w-full ${artists.length === 0 ? 'invisible' : 'visible'} text-center pb-1`}>
+        <button className="w-fit" onClick={() => setSortArtists(!sortArtists)}>
+          Sorting By {sortArtists ? 'Count' : 'Name'}
+        </button>
+      </div>
 
       <div className="flex flex-row flex-wrap gap-1 justify-center mb-1">
         {artists

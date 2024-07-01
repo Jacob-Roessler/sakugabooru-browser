@@ -22,7 +22,9 @@ export async function GET(req, { params }) {
     data = [...data, ...data2];
   }
 
-  const tagresponse = await fetch('https://www.sakugabooru.com/tag.json?type=1&limit=0');
+  const tagresponse = await fetch('https://www.sakugabooru.com/tag.json?type=1&limit=0', {
+    next: { revalidate: 86400 },
+  });
   let tagdata = await tagresponse.json();
 
   data = cleanData(data, tagdata);

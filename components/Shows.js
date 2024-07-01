@@ -89,20 +89,24 @@ const Shows = ({ current }) => {
         ></button>
       </div>
       <div>
-        <Pagination
-          setSearchTerm={setSearchShows}
-          searchTerm={searchShows}
-          offset={showsOffset}
-          setOffset={setShowsOffset}
-          list={shows}
-          pagination={pagination}
-          setPagination={setPagination}
-          placeholder="Series"
-        />
+        {shows.length > 0 && (
+          <Pagination
+            setSearchTerm={setSearchShows}
+            searchTerm={searchShows}
+            offset={showsOffset}
+            setOffset={setShowsOffset}
+            list={shows}
+            pagination={pagination}
+            setPagination={setPagination}
+            placeholder="Series"
+          />
+        )}
 
-        <button className="text-center w-full pb-1" onClick={() => setSortShows(!sortShows)}>
-          Sorting By {sortShows ? 'Count' : 'Name'}
-        </button>
+        <div className={`${shows.length === 0 ? 'invisible' : 'visible'} text-center w-full pb-1`}>
+          <button onClick={() => setSortShows(!sortShows)}>
+            Sorting By {sortShows ? 'Count' : 'Name'}
+          </button>
+        </div>
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-base-100 z-50 invisible sm:visible">
           <button
