@@ -1,4 +1,4 @@
-import { general_tags } from './general_tags.json';
+import general_tags from './general_tags.json';
 
 export default function cleanData(postsData, tagsData) {
   let artistsTags = {};
